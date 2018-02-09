@@ -11,7 +11,7 @@ namespace DDVue\AdminPanel\app\Http\Middleware;
 
 
 use Illuminate\Contracts\Auth\Factory as Auth;
-use Qla\AdminPanel\app\Exceptions\AdminAuthenticationException;
+use DDVue\AdminPanel\app\Exceptions\AdminAuthenticationException;
 use Closure;
 
 class Authenticate

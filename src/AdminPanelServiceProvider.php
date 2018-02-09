@@ -4,7 +4,7 @@ namespace DDVue\AdminPanel;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use Qla\AdminPanel\app\Exceptions\CustomHandler;
+use DDVue\AdminPanel\app\Exceptions\CustomHandler;
 
 class AdminPanelServiceProvider extends ServiceProvider
 {
@@ -68,12 +68,12 @@ class AdminPanelServiceProvider extends ServiceProvider
     {
         $this->setupRoutes();
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('AdminPanel', \Qla\AdminPanel\AdminPanelServiceProvider::class);
+        $loader->alias('AdminPanel', \DDVue\AdminPanel\AdminPanelServiceProvider::class);
 
 
 //        \App::singleton(
 //
-//            \Qla\AdminPanel\app\Exceptions\Handler::class
+//            \DDVue\AdminPanel\app\Exceptions\Handler::class
 //        );
 
 
