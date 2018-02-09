@@ -1,5 +1,5 @@
 # DDVue\AdminPanel
-Qla crud里的后台管理模块，需要 laravel 5.x。
+后台管理模块，需要 laravel 5.x，vue，element-ui。
 
 ## 安装
 
