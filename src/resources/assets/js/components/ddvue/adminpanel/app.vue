@@ -1,9 +1,11 @@
 <template>
-    <el-container :style="layoutMainStyle">
+    <el-container style="height:100%">
         <el-header>
-            header
+            <ddv-header>
+                <span slot="title">{{ title }}</span>
+                <span slot="username">{{ auth.name }}</span></ddv-header>
         </el-header>
-        <el-container>
+        <el-container style="padding:0 20px;">
             <el-container>
                 <ddv-sidebar width="220px" :onSelect="handleSelect"></ddv-sidebar>
                 <el-container>
@@ -18,39 +20,14 @@
 <script>
     export default {
         name: 'DdvApp',
-        data() {
-            return {
-                layoutMainStyle: {
-                    height: 'auto',
-                },
-            };
-        },
-        mounted() {
-            this.autoSetLayoutMainHeight();
-        },
-        updated() {
-            this.autoSetLayoutMainHeight();
+        computed: {
+            title: () => window.config.dashboard_name,
+            auth: () => window.config.auth
         },
         methods: {
-            autoSetLayoutMainHeight() {
-                const layoutMainEl = document.getElementById('app');
-
-                // 初始化 mainHeight，避免出现 mainHeight 附上 clientHeight 的值就一直保持不变
-                layoutMainEl.style.height = 'auto';
-
-                // 计算 mainHeight 新高度
-                const clientHeight = document.body.clientHeight;
-                console.log(clientHeight);
-                const layoutMainHeight = layoutMainEl.offsetHeight;
-
-                if (layoutMainHeight < clientHeight) {
-                    layoutMainEl.style.height = `${clientHeight}px`;
-                }
-            },
             handleSelect(key, keyPath) {
-                console.log(this);
                 this.$http.get(keyPath[1]).then(function (response) {
-
+                    const v = response.data;
                     new Vue({
                         el: this.target,
                         render: function (h) {

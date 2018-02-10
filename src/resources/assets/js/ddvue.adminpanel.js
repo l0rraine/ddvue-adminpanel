@@ -25,12 +25,15 @@ Vue.prototype.$http = axios;
  */
 
 
-import App from './components/ddvue/adminpanel/app.vue';
-Vue.component(App.name, App);
+import DdvApp from './components/ddvue/adminpanel/app.vue';
+Vue.component(DdvApp.name, DdvApp);
+
+import DdvHeader from './components/ddvue/adminpanel/header/header.vue';
+Vue.component(DdvHeader.name, DdvHeader);
 
 
-import Sidebar from './components/ddvue/adminpanel/menu/sidebar.vue';
-Vue.component(Sidebar.name, Sidebar);
+import DdvSidebar from './components/ddvue/adminpanel/menu/sidebar.vue';
+Vue.component(DdvSidebar.name, DdvSidebar);
 
 import DdvSubmenu from './components/ddvue/adminpanel/menu/submenu.vue';
 Vue.component(DdvSubmenu.name, DdvSubmenu);

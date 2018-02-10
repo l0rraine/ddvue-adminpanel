@@ -1,12 +1,11 @@
 <template>
-    <el-aside :width="width">
+    <el-aside :width="width" style="border-right: solid 1px #e6e6e6;">
         <el-row class="tac">
             <el-col>
                 <el-menu :default-openeds="openeds"
                          :mode="mode"
                          @select="onSelect"
                          class="ddv-menu"
-                         :style="style"
                 >
                     <ddv-submenu v-for="(m,i) in menus" :submenu="m" :key="i+''"></ddv-submenu>
                 </el-menu>
@@ -20,9 +19,6 @@
         data() {
             return {
                 menus: [],
-                style: {
-                    width: '100%'
-                }
             }
         },
         props: {
@@ -31,7 +27,7 @@
                 default: '#main'
             },
             width: {
-                type: [String, Number],
+                type: String,
                 default: '300px'
             },
             mode: {
@@ -40,11 +36,11 @@
             },
             openeds: {
                 type: Array,
-                default: function () { return [1] }
+                default: function () { return ['1'] }
             },
             onSelect: {
                 type: Function,
-                default: function(){}
+                default: function () {}
             }
         },
         created() {
@@ -52,71 +48,13 @@
         },
         methods: {
             fetchMenus() {
-                this.menus = [
-                    {
-                        title: '业务模块',
-                        type: 'submenu',
-                        icon: 'el-icon-menu',
-                        index: '1',
-                        children: [
-                            {
-                                title: '文章管理',
-                                type: 'group',
-                                index: '1-1',
-                                children: [
-                                    {
-                                        title: '分类1',
-                                        index: 'xxxx',
-                                        type: 'item'
-                                    },
-                                    {
-                                        title: '分类2',
-                                        index: 'yyy',
-                                        type: 'item'
-                                    }
-                                ]
-                            },
-                            {
-                                title: '业务模块2',
-                                type: 'submenu',
-                                icon: 'el-icon-menu',
-                                index: '3',
-                                children: [
-                                    {
-                                        title: '分类3',
-                                        index: 'zzz',
-                                        type: 'item'
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        title: '管理模块',
-                        type: 'submenu',
-                        icon: 'el-icon-setting',
-                        index: '2',
-                        children: [
-                            {
-                                title: '用户权限',
-                                type: 'group',
-                                index: '2-1',
-                                children: [
-                                    {
-                                        title: '用户管理',
-                                        index: 'xxxx',
-                                        type: 'item'
-                                    },
-                                    {
-                                        title: '权限管理',
-                                        index: 'yyy',
-                                        type: 'item'
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
+                const prefix = window.config.dashboard_url_prefix;
+                const v = this;
+                this.$http.get(`${prefix}/getmenus`).then(function (response) {
+                    v.menus = response.data;
+                }).catch(function (response) {
+                    console.log('无法取得管理页面菜单数据，错误信息如下：\n' + response);
+                });
             }
 
         }
@@ -126,6 +64,8 @@
 <style>
     .ddv-menu {
         display: inline-block;
-        min-height: 400px;
+        /*min-height: 400px;*/
+        width: 100%;
+        border-right: 0px;
     }
 </style>

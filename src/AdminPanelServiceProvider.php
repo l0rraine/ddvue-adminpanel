@@ -34,9 +34,10 @@ class AdminPanelServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__ . '/resources/views' => resource_path('views/vendor/ddvue/adminpanel'),
-            __DIR__ . '/public' => public_path('/'),
+//            __DIR__ . '/public' => public_path('/'),
             __DIR__ . '/config/ddvue' => config_path('ddvue'),
             __DIR__ . '/resources/assets/js' => resource_path('assets/js'),
+            __DIR__ . '/resources/assets/sass' => resource_path('assets/sass'),
 
         ], 'ddvue-adminpanel');
     }
@@ -52,6 +53,7 @@ class AdminPanelServiceProvider extends ServiceProvider
             function () use ($router) {
 
                 $router->get('/', 'AdminPanelController@getIndex')->name('DDVue.AdminPanel.home');
+                $router->get('/getmenus', 'AdminPanelController@getMenusJson')->name('DDVue.AdminPanel.menu.get');
 
             });
 

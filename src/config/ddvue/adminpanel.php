@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'dashboard_name' => '请输入后台标题',
     'title' => 'Title',
     'footer_copyright' => 'copyright',
     'url_prefix' => 'admin',
