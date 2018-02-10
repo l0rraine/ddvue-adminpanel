@@ -2,7 +2,6 @@
     $config = [
         'dashboard_name' => config('ddvue.adminpanel.dashboard_name'),
         'dashboard_url_prefix'=> config('ddvue.adminpanel.url_prefix'),
-        'auth' => (new \App\Models\User())->find(1) //Auth::check()? Auth::user():null,
     ];
 
     $polyfills = [
@@ -17,7 +16,8 @@
         'String.prototype.endsWith',
     ];
 @endphp
-        <!doctype html>
+
+<!doctype html>
 <html lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
@@ -33,10 +33,15 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div id="app">
-    <ddv-app></ddv-app>
-</div>
 <script>window.config = @json($config);</script>
+<div id="app">
+    <ddv-app>
+        <div slot="content">
+            @yield('content')
+        </div>
+    </ddv-app>
+</div>
+
 
 {{-- Polyfill JS features via polyfill.io --}}
 {{--<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features={{ implode(',', $polyfills) }}"></script>--}}

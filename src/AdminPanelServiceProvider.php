@@ -53,7 +53,7 @@ class AdminPanelServiceProvider extends ServiceProvider
             function () use ($router) {
 
                 $router->get('/', 'AdminPanelController@getIndex')->name('DDVue.AdminPanel.home');
-                $router->get('/getmenus', 'AdminPanelController@getMenusJson')->name('DDVue.AdminPanel.menu.get');
+                $router->get('/settingsJson', 'AdminPanelController@getSettingsJson')->name('DDVue.AdminPanel.settings.json');
 
             });
 

@@ -7,7 +7,7 @@
                          @select="onSelect"
                          class="ddv-menu"
                 >
-                    <ddv-submenu v-for="(m,i) in menus" :submenu="m" :key="i+''"></ddv-submenu>
+                    <ddv-submenu v-for="(m,i) in menuData" :submenu="m" :key="i+''"></ddv-submenu>
                 </el-menu>
             </el-col>
         </el-row>
@@ -16,11 +16,6 @@
 <script>
     export default {
         name: 'DdvSidebar',
-        data() {
-            return {
-                menus: [],
-            }
-        },
         props: {
             target: {
                 type: String,
@@ -41,22 +36,11 @@
             onSelect: {
                 type: Function,
                 default: function () {}
+            },
+            menuData: {
+                type: Array,
+                default: function () { return []}
             }
-        },
-        created() {
-            this.fetchMenus();
-        },
-        methods: {
-            fetchMenus() {
-                const prefix = window.config.dashboard_url_prefix;
-                const v = this;
-                this.$http.get(`${prefix}/getmenus`).then(function (response) {
-                    v.menus = response.data;
-                }).catch(function (response) {
-                    console.log('无法取得管理页面菜单数据，错误信息如下：\n' + response);
-                });
-            }
-
         }
     }
 </script>
