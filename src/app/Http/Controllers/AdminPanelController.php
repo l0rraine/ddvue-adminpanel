@@ -10,7 +10,7 @@ class AdminPanelController extends Controller
 
     public function getIndex()
     {
-        return view('adminpanel::index');
+        return view('ddvue.adminpanel::index');
     }
 
 }

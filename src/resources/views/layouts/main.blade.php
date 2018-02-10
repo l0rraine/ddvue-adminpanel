@@ -16,6 +16,7 @@
 <body>
 <div id="app">
     <ddv-app></ddv-app>
+    <example></example>
 </div>
 
 <script src="/js/manifest.js"></script>

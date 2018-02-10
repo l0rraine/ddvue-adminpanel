@@ -1,10 +1,6 @@
 
-@extends('adminpanel::layouts.main')
+@extends('ddvue.adminpanel::layouts.main')
 
 
-@section('content')
-
-
-@endsection
 
 

@@ -21,9 +21,9 @@ class AdminPanelServiceProvider extends ServiceProvider
 
         // LOAD THE VIEWS
         // - first the published views (in case they have any changes)
-        $this->loadViewsFrom(resource_path('views/vendor/ddvue/adminpanel'), 'adminpanel');
+        $this->loadViewsFrom(resource_path('views/vendor/ddvue/adminpanel'), 'ddvue.adminpanel');
         // - then the stock views that come with the package, in case a published view might be missing
-        $this->loadViewsFrom(realpath(__DIR__ . '/resources/views'), 'adminpanel');
+        $this->loadViewsFrom(realpath(__DIR__ . '/resources/views'), 'ddvue.adminpanel');
 
 
         // LOAD THE CONFIG
@@ -38,7 +38,7 @@ class AdminPanelServiceProvider extends ServiceProvider
             __DIR__ . '/config/ddvue' => config_path('ddvue'),
             __DIR__ . '/resources/assets/js' => resource_path('assets/js'),
 
-        ], 'ddvue');
+        ], 'ddvue-adminpanel');
     }
 
     public static function setupRoutes()
