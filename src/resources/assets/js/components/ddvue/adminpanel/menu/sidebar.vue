@@ -3,7 +3,6 @@
         <el-row class="tac">
             <el-col>
                 <el-menu :default-openeds="openeds"
-                         :mode="mode"
                          @select="onSelect"
                          class="ddv-menu"
                 >
@@ -17,30 +16,16 @@
     export default {
         name: 'DdvSidebar',
         props: {
-            target: {
-                type: String,
-                default: '#main'
-            },
             width: {
                 type: String,
                 default: '300px'
-            },
-            mode: {
-                type: String,
-                default: 'vertical'
             },
             openeds: {
                 type: Array,
                 default: function () { return ['1'] }
             },
-            onSelect: {
-                type: Function,
-                default: function () {}
-            },
-            menuData: {
-                type: Array,
-                default: function () { return []}
-            }
+            onSelect: Function,
+            menuData: Array
         }
     }
 </script>

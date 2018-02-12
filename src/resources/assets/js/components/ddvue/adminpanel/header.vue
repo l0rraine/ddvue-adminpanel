@@ -5,7 +5,7 @@
                 {{ title }}
             </h3>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="1">
             <el-menu mode="horizontal" @select="handleSelect" menu-trigger="click" class="pull-right"
                      text-color="white" background-color="#409EFF">
                 <el-submenu index="1">
@@ -23,10 +23,7 @@
 <script>
     export default {
         name: 'DdvHeader',
-        props: {
-            title: String,
-            username: String
-        },
+        props: ['title', 'username'],
         methods: {
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);

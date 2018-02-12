@@ -17,7 +17,7 @@
     ];
 @endphp
 
-<!doctype html>
+        <!doctype html>
 <html lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
@@ -35,11 +35,7 @@
 <body>
 <script>window.config = @json($config);</script>
 <div id="app">
-    <ddv-app>
-        <div slot="content">
-            @yield('content')
-        </div>
-    </ddv-app>
+    <ddv-app config="{{ json_encode($config) }}"></ddv-app>
 </div>
 
 
@@ -51,22 +47,9 @@
 <script src="{{ mix('js/vendor.js') }}"></script>
 <script src="{{ mix('js/app.js') }}"></script>
 <script>
-    function autoSetLayoutMainHeight() {
-        const layoutMainEl = document.getElementById('app');
-
-        // 初始化 mainHeight，避免出现 mainHeight 附上 clientHeight 的值就一直保持不变
-        layoutMainEl.style.height = 'auto';
-
-        // 计算 mainHeight 新高度
-        const clientHeight = document.body.clientHeight;
-        const layoutMainHeight = layoutMainEl.offsetHeight;
-
-        if (layoutMainHeight < clientHeight) {
-            layoutMainEl.style.height = `${clientHeight}px`;
-        }
-    }
-
-    window.addEventListener('resize', autoSetLayoutMainHeight);
+    $(document).ready(function(){
+        $('#app').height($(document).height()-16);
+    });
 </script>
 </body>
 </html>

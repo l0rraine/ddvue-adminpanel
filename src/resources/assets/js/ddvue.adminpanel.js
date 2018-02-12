@@ -28,9 +28,8 @@ Vue.prototype.$http = axios;
 import DdvApp from './components/ddvue/adminpanel/app.vue';
 Vue.component(DdvApp.name, DdvApp);
 
-import DdvHeader from './components/ddvue/adminpanel/header/header.vue';
+import DdvHeader from './components/ddvue/adminpanel/header.vue';
 Vue.component(DdvHeader.name, DdvHeader);
-
 
 import DdvSidebar from './components/ddvue/adminpanel/menu/sidebar.vue';
 Vue.component(DdvSidebar.name, DdvSidebar);
@@ -40,6 +39,7 @@ Vue.component(DdvSubmenu.name, DdvSubmenu);
 
 import DdvMenuGroup from './components/ddvue/adminpanel/menu/menugroup.vue';
 Vue.component(DdvMenuGroup.name, DdvMenuGroup);
+
 
 
 

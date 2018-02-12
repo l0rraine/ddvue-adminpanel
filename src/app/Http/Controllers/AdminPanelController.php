@@ -42,7 +42,7 @@ class AdminPanelController extends Controller
                             'children' => [
                                 [
                                     'title' => '分类1',
-                                    'index' => 'xxxx',
+                                    'index' => '/test',
                                     'type'  => 'item'
                                 ],
                                 [
