@@ -47,8 +47,19 @@
 <script src="{{ mix('js/vendor.js') }}"></script>
 <script src="{{ mix('js/app.js') }}"></script>
 <script>
+    function doResize(){
+        var h = $(window).height()-16,
+            headerHeight = $('header').height(),
+            footerHeight = $('footer').height();
+
+        $('aside').height(h-headerHeight);
+        $('#main').height(h-20-headerHeight-footerHeight);
+    }
     $(document).ready(function(){
-        $('#app').height($(document).height()-16);
+        doResize();
+    });
+    $(window).resize(function(){
+        doResize();
     });
 </script>
 </body>
