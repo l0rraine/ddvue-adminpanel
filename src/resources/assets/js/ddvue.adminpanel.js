@@ -8,7 +8,6 @@
 require('./bootstrap');
 
 
-
 window.Vue = require('vue');
 
 import ElementUI from 'element-ui';
@@ -39,6 +38,9 @@ Vue.component(DdvSubmenu.name, DdvSubmenu);
 
 import DdvMenuGroup from './components/ddvue/adminpanel/menu/menugroup.vue';
 Vue.component(DdvMenuGroup.name, DdvMenuGroup);
+
+import DdvWelcome from './components/ddvue/adminpanel/welcome.vue';
+Vue.component(DdvWelcome.name, DdvWelcome);
 
 
 
