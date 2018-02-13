@@ -7,7 +7,7 @@
         </el-col>
         <el-col :span="1">
             <el-menu mode="horizontal" @select="handleSelect" menu-trigger="click" class="pull-right"
-                     text-color="white" background-color="#409EFF">
+                     >
                 <el-submenu index="1">
                     <template slot="title">
                         {{ username }}
@@ -23,7 +23,10 @@
 <script>
     export default {
         name: 'DdvHeader',
-        props: ['title', 'username'],
+        props: {
+            title: String,
+            username: String
+        },
         methods: {
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);
@@ -31,13 +34,16 @@
         }
     }
 </script>
-<style>
-    .row-bg {
-        background-color: #409EFF;
-        color: white;
-    }
+<style scoped>
+    /*.row-bg {*/
+        /*background-color: #409EFF;*/
+        /*color: white;*/
+    /*}*/
 
     .el-menu--popup {
         min-width: 100px !important;
+    }
+    .el-menu--horizontal {
+        background-color:transparent !important;
     }
 </style>

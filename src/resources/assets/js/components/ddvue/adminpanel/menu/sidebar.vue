@@ -1,10 +1,11 @@
 <template>
-    <el-aside :width="width" style="border-right: solid 1px #e6e6e6;">
+    <el-aside :width="width"  style="border-right: solid 1px #e6e6e6;">
         <el-row class="tac">
             <el-col>
                 <el-menu :default-openeds="openeds"
                          @select="onSelect"
                          class="ddv-menu"
+                         :mode="direction"
                 >
                     <ddv-submenu v-for="(m,i) in menuData" :submenu="m" :key="i+''"></ddv-submenu>
                 </el-menu>
@@ -20,6 +21,10 @@
                 type: String,
                 default: '300px'
             },
+            direction: {
+                type: String,
+                default: 'vertical'
+            },
             openeds: {
                 type: Array,
                 default: function () { return ['1'] }
@@ -30,7 +35,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .ddv-menu {
         display: inline-block;
         /*min-height: 400px;*/
