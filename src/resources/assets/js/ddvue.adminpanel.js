@@ -23,6 +23,8 @@ Vue.prototype.$http = axios;
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import DdvLogin from './components/ddvue/adminpanel/auth/login.vue';
+Vue.component(DdvLogin.name, DdvLogin);
 
 import DdvApp from './components/ddvue/adminpanel/app.vue';
 Vue.component(DdvApp.name, DdvApp);

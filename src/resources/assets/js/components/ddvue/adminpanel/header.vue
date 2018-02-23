@@ -12,7 +12,7 @@
                     <template slot="title">
                         {{ username }}
                     </template>
-                    <el-menu-item index="2-3">退出</el-menu-item>
+                    <el-menu-item index="logout" @select="handleSelect">退出</el-menu-item>
                 </el-submenu>
             </el-menu>
         </el-col>
@@ -27,9 +27,23 @@
             title: String,
             username: String
         },
+        computed: {
+          logoutUrl: function(){
+              let t = window.config.login_type=='ldap'?'ldap':'name'
+              return `${window.config.dashboard_url_prefix}/${t}logout`;
+          }
+        },
         methods: {
             handleSelect(key, keyPath) {
-                console.log(key, keyPath);
+                if(keyPath[1]==='logout'){
+                    let that = this;
+                    that.$http.post(that.logoutUrl).then(function (response) {
+                        window.location.replace(window.location.href)
+                    }).catch(error => {
+                        console.log(that.status);
+                    });
+                }
+
             }
         }
     }
