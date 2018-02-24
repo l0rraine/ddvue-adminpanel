@@ -29,8 +29,7 @@
         },
         computed: {
           logoutUrl: function(){
-              let t = window.config.login_type=='ldap'?'ldap':'name'
-              return `${window.config.dashboard_url_prefix}/${t}logout`;
+              return `${window.config.dashboard_url_prefix}/logout`;
           }
         },
         methods: {

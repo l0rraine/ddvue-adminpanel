@@ -3,6 +3,8 @@
 namespace DDVue\AdminPanel\app\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class AdminPanelController extends Controller
@@ -19,10 +21,27 @@ class AdminPanelController extends Controller
             'dashboard_name'       => config('ddvue.adminpanel.dashboard_name'),
             'dashboard_url_prefix' => config('ddvue.adminpanel.url_prefix'),
             'auth'                 => (new \App\Models\User())->find(1), //Auth::check()? Auth::user():null,
-            'menu_data'                => $this->getMenus()
+            'menu_data'            => $this->getMenus()
         ];
 
         return json_encode($config);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard($this->get_guard())->logout();
+        $request->session()->invalidate();
+    }
+
+    function get_guard()
+    {
+        if (Auth::guard('ddvue_db')->check()) {
+            return "ddvue_db";
+        } else if (Auth::guard('ddvue_ldap')->check()) {
+            return "ddvue_ldap";
+        } else {
+            return "";
+        }
     }
 
     private function getMenus()

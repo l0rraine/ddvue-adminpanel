@@ -13,7 +13,10 @@ namespace DDVue\AdminPanel\app\Providers;
 use Adldap\Laravel\Auth\DatabaseUserProvider;
 use Adldap\Laravel\Commands\Import;
 use Adldap\Laravel\Commands\SyncPassword;
+use Adldap\Laravel\Events\Authenticated;
 use Adldap\Laravel\Events\AuthenticatedWithCredentials;
+use Adldap\Laravel\Events\Authenticating;
+use Adldap\Laravel\Events\AuthenticationFailed;
 use Adldap\Laravel\Events\AuthenticationRejected;
 use Adldap\Laravel\Events\AuthenticationSuccessful;
 use Adldap\Laravel\Events\DiscoveredWithCredentials;
@@ -24,10 +27,6 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Auth;
-use Adldap\Laravel\Events\Authenticated;
-use Adldap\Laravel\Events\Authenticating;
-use Adldap\Laravel\Events\AuthenticationFailed;
 
 class CustomDatabaseUserProvider extends DatabaseUserProvider
 {

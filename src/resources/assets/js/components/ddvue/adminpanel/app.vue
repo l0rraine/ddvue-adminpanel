@@ -76,6 +76,7 @@
 
     .el-footer {
         text-align: center;
+        height:30px !important;
     }
 
     .el-footer span {

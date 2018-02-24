@@ -79,11 +79,11 @@ class AdminPanelServiceProvider extends ServiceProvider
 
                 $router->get('/ldaplogin', 'Auth\LdapLoginController@showLoginForm')->name('DDVue.AdminPanel.ldaplogin');
                 $router->post('/ldaplogin', 'Auth\LdapLoginController@login')->name('DDVue.AdminPanel.ldaplogin');
-                $router->post('/namelogout','Auth\NameLoginController@logout')->name('DDVue.AdminPanel.namelogout');
 
                 $router->get('/namelogin', 'Auth\NameLoginController@showLoginForm')->name('DDVue.AdminPanel.namelogin');
                 $router->post('/namelogin', 'Auth\NameLoginController@login')->name('DDVue.AdminPanel.namelogin');
-                $router->post('/ldaplogout','Auth\LdapLoginController@logout')->name('DDVue.AdminPanel.ldaplogout');
+
+                $router->post('/logout','AdminPanelController@logout')->name('DDVue.AdminPanel.logout');
 
 
             });
