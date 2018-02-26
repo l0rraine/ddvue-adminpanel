@@ -102,21 +102,17 @@
 
                 let that = this;
                 that.$http.post(`${that.urlPrefix}/ldaplogin`, this.form).then(function (response) {
-                    window.config.login_type='ldap';
-                    window.location.replace(window.location.href);
+                    window.location.reload(true);
                 }).catch(error => {
                     that.status = error;
-                    console.log(that.status);
                 });
             },
             doNameLogin() {
                 let that = this;
                 that.$http.post(`${that.urlPrefix}/namelogin`, this.form).then(function (response) {
-                    window.config.login_type='name';
-                    window.location.replace(window.location.href)
+                    window.location.reload(true);
                 }).catch(error => {
                     that.status = error.response.data.message;
-                    console.log(that.status);
                 });
             }
         }

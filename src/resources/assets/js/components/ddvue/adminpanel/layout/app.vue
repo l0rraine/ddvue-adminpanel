@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-header>
+        <el-header style="background-color: rgb(64, 158, 255);margin:0 20px;" height="45px">
             <ddv-header :title="title" :username="username"></ddv-header>
         </el-header>
         <el-container style="padding:0 20px;">
@@ -32,7 +32,6 @@
         },
         computed: {
             title: () => window.config.dashboard_name,
-            prefix: () => window.config.dashboard_url_prefix,
         },
         created() {
             this.getSettings();
@@ -40,7 +39,7 @@
         methods: {
             getSettings() {
                 const that = this;
-                that.$http.get(`${that.prefix}/settingsJson`).then(function (response) {
+                that.$http.get(`${window.config.dashboard_url_prefix}/settingsJson`).then(function (response) {
                     that.settings = response.data;
                     that.username = response.data.auth.name;
                 }).catch(function (response) {
@@ -48,19 +47,10 @@
                 });
             },
             handleSidebarMenuClick(key, keyPath) {
-                this.sendToMain(keyPath[1]);
-            },
-            sendToMain(url) {
-                this.$http.get(url).then(function (response) {
-                    const v = response.data;
-                    let MyComponent = Vue.extend({
-                        template: v
-                    });
-                    let component = new MyComponent().$mount();
-                    document.getElementById('main').innerHTML = '';
-                    document.getElementById('main').appendChild(component.$el)
+                this.sendTo('main', keyPath[1], function () {
+                    window.config.main_url = keyPath[1];
                 });
-            }
+            },
         }
 
     }
@@ -76,7 +66,7 @@
 
     .el-footer {
         text-align: center;
-        height:30px !important;
+        height: 30px !important;
     }
 
     .el-footer span {

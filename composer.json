@@ -12,6 +12,7 @@
     "require": {
         "adldap2/adldap2": "^8.0",
         "adldap2/adldap2-laravel": "^4.0",
+        "ddvue/crud": "dev-master",
     },
     "autoload": {
         "psr-4": {
