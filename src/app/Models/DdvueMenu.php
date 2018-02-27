@@ -12,6 +12,8 @@ class DdvueMenu extends BaseClassifiedModel
 
     protected $table = 'ddvue_menus';
 
+    protected $fillable = ['title','index','type','icon','owners','sort_id','parent_id'];
+
     public static function rules($id = 0, $merge = [])
     {
         return array_merge([

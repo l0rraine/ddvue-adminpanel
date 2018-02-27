@@ -1,6 +1,9 @@
 <template>
-    <ddv-crud-main :breadcrumbData="breadcrumbData">
-        <ddv-crud-list :tableDataUrl="tableDataUrl" :showTablepagination="false" slot="content">
+    <ddv-main :breadcrumbData="breadcrumbData">
+        <ddv-crud-list :tableDataUrl="tableDataUrl"
+                       :showTablepagination="false"
+                       slot="content"
+                       @onAdd="handleAdd">
             <el-table-column label="标题">
                 <template slot-scope="scope">
                     <ddv-datatable-recursive-title :item="scope.row">
@@ -21,20 +24,27 @@
                 </template>
             </el-table-column>
         </ddv-crud-list>
-    </ddv-crud-main>
+    </ddv-main>
 
 </template>
 <script>
-
-    import {ListEditButton} from "../../../../../../../../../crud/src/resources/assets/js/components/ddvue/crud/mixins/list-edit-button";
-
-
     export default {
         name: 'DdvPageMenuList',
-        mixins: [ListEditButton],
         props: {
             breadcrumbData: Object,
             tableDataUrl: String,
         },
+        methods: {
+            handleEdit: function (index, value) {
+                let that = this,
+                    url  = `${that.getMainUrl()}/add`;
+                that.insertEl(that, url);
+            },
+            handleAdd: function () {
+                let that = this,
+                    url  = `${that.getMainUrl()}/add`;
+                that.insertEl(that, url);
+            }
+        }
     }
 </script>

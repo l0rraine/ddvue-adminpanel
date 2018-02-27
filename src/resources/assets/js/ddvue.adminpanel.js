@@ -16,33 +16,17 @@ Vue.use(ElementUI);
 
 Vue.prototype.$http = axios;
 
-
-
-Vue.mixin({
-    methods:{
-        sendTo(id,url) {
-            this.$http.get(url).then(function (response) {
-                const v = response.data;
-                let MyComponent = Vue.extend({
-                    template: v
-                });
-                let component = new MyComponent().$mount();
-                document.getElementById(id).innerHTML = '';
-                document.getElementById(id).appendChild(component.$el)
-            });
-        }
-    },
-
-})
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
 import DdvLogin from './components/ddvue/adminpanel/auth/login.vue';
 Vue.component(DdvLogin.name, DdvLogin);
 
+/****************************  layout  ************************/
 import DdvApp from './components/ddvue/adminpanel/layout/app.vue';
 Vue.component(DdvApp.name, DdvApp);
 
@@ -58,9 +42,16 @@ Vue.component(DdvSubmenu.name, DdvSubmenu);
 import DdvMenuGroup from './components/ddvue/adminpanel/layout/sidebar/menugroup.vue';
 Vue.component(DdvMenuGroup.name, DdvMenuGroup);
 
+import DdvCrudMain from './components/ddvue/adminpanel/layout/main.vue';
+Vue.component(DdvCrudMain.name, DdvCrudMain);
+
+import DdvCrudBreadcrumbs from './components/ddvue/adminpanel/layout/breadcrumbs.vue';
+Vue.component(DdvCrudBreadcrumbs.name, DdvCrudBreadcrumbs);
+
 import DdvWelcome from './components/ddvue/adminpanel/welcome.vue';
 Vue.component(DdvWelcome.name, DdvWelcome);
 
+/**************************  pages  **************************/
 import DdvMenuList from './components/ddvue/adminpanel/menu/list.vue';
 Vue.component(DdvMenuList.name, DdvMenuList);
 

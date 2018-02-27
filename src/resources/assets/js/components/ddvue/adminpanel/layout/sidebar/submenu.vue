@@ -28,9 +28,7 @@
     export default {
         name: 'DdvSubmenu',
         props: {
-            submenu: {
-                type: Object
-            }
+            submenu: Object
         }
     }
 </script>
