@@ -31,19 +31,24 @@ class DdvueMenu extends BaseClassifiedModel
     public static function setIndexAuto()
     {
         foreach (self::all() as $k => $v) {
-            if ($v['index'] == '') {
-                $index = substr($v['class_list'], 1, strlen($v['class_list']) - 2);
-                $arr   = explode(',', $index);
-                $index = join('-', $arr);
-                $v->update(['index' => $index]);
+            if(array_key_exists('index',$v)){
+                if ($v['index'] == '') {
+                    $index = substr($v['class_list'], 1, strlen($v['class_list']) - 2);
+                    $arr   = explode(',', $index);
+                    $index = join('-', $arr);
+                    $v->update(['index' => $index]);
+                }
             }
+
         }
     }
 
     public function extraActionWhenRecurse(array $arr)
     {
 
-        if(Route::has($arr['index'])) $arr['index']=route($arr['index']);
+        if(array_key_exists('index',$arr) && Route::has($arr['index'])) {
+            $arr['index']=route($arr['index']);
+        }
         return $arr;
     }
 }
