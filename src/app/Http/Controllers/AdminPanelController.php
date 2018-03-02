@@ -35,7 +35,7 @@ class AdminPanelController extends Controller
         $config = [
             'dashboard_name'       => config('ddvue.adminpanel.dashboard_name'),
             'dashboard_url_prefix' => config('ddvue.adminpanel.url_prefix'),
-            'auth'                 => (new \App\Models\User())->find(1), //Auth::check()? Auth::user():null,
+            'auth'                 => Auth::user(),
             'menu_data'            => $this->getMenus()
         ];
 
