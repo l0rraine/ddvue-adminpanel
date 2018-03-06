@@ -30,7 +30,7 @@
                     </a>
 
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                        <li>sendTo
+                        <li>
                             <a href="#">
                                 <i class="fa fa-cog"></i>
                                 设置

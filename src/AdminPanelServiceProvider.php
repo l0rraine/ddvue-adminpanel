@@ -3,7 +3,7 @@
 namespace DDVue\AdminPanel;
 
 use Illuminate\Auth\SessionGuard;
-use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use DDVue\AdminPanel\app\Exceptions\CustomHandler;
 use Illuminate\Contracts\Debug\ExceptionHandler;
@@ -58,34 +58,39 @@ class AdminPanelServiceProvider extends ServiceProvider
 
     private function setupRoutes()
     {
-        $router = app('router');
 
-        $router->group([
+       Route::group([
             'namespace'  => '\DDVue\AdminPanel\app\Http\Controllers',
             'middleware' => ['web'],
             'prefix'     => config('ddvue.adminpanel.url_prefix')],
-            function () use ($router) {
+            function () {
                 require __DIR__ . '/routes/auth.php';
             });
 
         $middleware = ['web', config('ddvue.adminpanel.auth.admin_auth_middleware')];
 
-        $router->group([
-            'namespace'  => '\DDVue\AdminPanel\app\Http\Controllers',
+        Route::group([
             'middleware' => $middleware,
             'prefix'     => config('ddvue.adminpanel.url_prefix')],
-            function () use ($router) {
+            function () {
 
-                $router->get('/', 'AdminPanelController@getIndex')->name('DDVue.AdminPanel.home');
+                Route::get('/', '\DDVue\AdminPanel\app\Http\Controllers\AdminPanelController@getIndex')->name('DDVue.AdminPanel.home');
 
-                $router->get('/welcome', function () {
+                Route::get('/welcome', function () {
                     return view('ddvue.adminpanel::welcome');
                 })->name('DDVue.AdminPanel.welcome');
 
-                $router->get('/settingsJson', 'AdminPanelController@getSettingsJson')->name('DDVue.AdminPanel.settings.json');
+                Route::get('/settingsJson', '\DDVue\AdminPanel\app\Http\Controllers\AdminPanelController@getSettingsJson')->name('DDVue.AdminPanel.settings.json');
 
                 //后台菜单
                 require __DIR__ . '/routes/menu.php';
+
+                //用户管理
+                require __DIR__ . '/routes/user.php';
+
+
+                //Excel上传
+                require __DIR__ . '/routes/excel.php';
 
             });
 

@@ -1,8 +1,8 @@
 <template>
     <ddv-main :breadcrumbData="breadcrumbData">
         <ddv-crud-list :tableDataUrl="tableDataUrl"
-                       :showTablepagination="false"
-                       :tableIsRecursive="true"
+                       :showTablepagination="true"
+                       :tableIsRecursive="false"
                        slot="content"
                        :showImportBtn="showImportBtn"
                        :showAddBtn="showAddBtn"
@@ -10,17 +10,10 @@
                        @onAdd="handleAdd"
                        @onDelete="handleDelete"
                        @onImport="handleImport">
-            <el-table-column label="标题">
-                <template slot-scope="scope">
-                    <ddv-datatable-recursive-title :item="scope.row">
-                        {{ scope.row.title }}
-                    </ddv-datatable-recursive-title>
-                </template>
-            </el-table-column>
-            <el-table-column prop="index" label="路径名" width="300"></el-table-column>
-            <el-table-column prop="type" label="类型" width="180"></el-table-column>
-            <el-table-column prop="sort_id" label="排序" width="180"></el-table-column>
-            <el-table-column prop="owner" label="所有者" width="180"></el-table-column>
+            <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+            <el-table-column prop="email" label="邮箱" width="300"></el-table-column>
+            <el-table-column label="单位" width="180"></el-table-column>
+            <el-table-column  label="权限"></el-table-column>
             <el-table-column label="操作" width="100">
                 <template slot-scope="scope">
                     <el-button type="primary"
@@ -37,7 +30,7 @@
     import {BaseList} from '../mixins/base-list'
 
     export default {
-        name: 'DdvPageMenuList',
+        name: 'DdvPageUserList',
         mixins: [BaseList]
     }
 </script>

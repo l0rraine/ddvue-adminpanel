@@ -13,6 +13,15 @@ class DdvueMenuSeeder extends Seeder
     {
         DB::table('ddvue_menus')->insert([
             [
+                'title'      => '业务模块',
+                'type'       => 'submenu',
+                'index'      => '',
+                'icon'       => 'el-icon-menu',
+                'parent_id'  => 0,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ],
+            [
                 'title'      => '管理模块',
                 'type'       => 'submenu',
                 'index'      => '',
@@ -26,7 +35,7 @@ class DdvueMenuSeeder extends Seeder
                 'type'       => 'group',
                 'index'      => '',
                 'icon'       => '',
-                'parent_id'  => 1,
+                'parent_id'  => 2,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             ],
@@ -35,7 +44,7 @@ class DdvueMenuSeeder extends Seeder
                 'type'       => 'item',
                 'index'      => '',
                 'icon'       => '',
-                'parent_id'  => 2,
+                'parent_id'  => 3,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             ],
@@ -44,7 +53,7 @@ class DdvueMenuSeeder extends Seeder
                 'type'       => 'item',
                 'index'      => '',
                 'icon'       => '',
-                'parent_id'  => 2,
+                'parent_id'  => 3,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             ],
@@ -53,7 +62,7 @@ class DdvueMenuSeeder extends Seeder
                 'type'       => 'item',
                 'index'      => '',
                 'icon'       => '',
-                'parent_id'  => 1,
+                'parent_id'  => 2,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             ],
@@ -62,7 +71,7 @@ class DdvueMenuSeeder extends Seeder
                 'type'       => 'item',
                 'index'      => 'Ddvue.AdminPanel.menu.index',
                 'icon'       => '',
-                'parent_id'  => 1,
+                'parent_id'  => 2,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             ],
