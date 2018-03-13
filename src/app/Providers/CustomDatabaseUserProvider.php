@@ -93,7 +93,7 @@ class CustomDatabaseUserProvider extends DatabaseUserProvider
                     Bus::dispatch(new SyncPassword($model, $credentials));
 
                     // 去掉 -胜利油田
-                    $model->name = explode('-', $model->name)[0];
+                    $model->displayname = explode('-', $model->displayname)[0];
 
                     $model->save();
 

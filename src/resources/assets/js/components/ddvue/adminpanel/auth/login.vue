@@ -8,7 +8,9 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
-                    <el-input v-model="form.password" type="password">
+                    <el-input type="password"
+                              v-model="form.password"
+                              @keyup.enter="doLogin('ldap','ldapLoginForm')" >
                     </el-input>
                 </el-form-item>
                 <el-row>
@@ -34,7 +36,9 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
-                    <el-input v-model="form.password" type="password">
+                    <el-input type="password"
+                              v-model="form.password"
+                              @keyup.enter="doLogin('name','nameLoginForm')" >
                     </el-input>
                 </el-form-item>
                 <el-row>
@@ -46,7 +50,8 @@
                 <el-row>
                     <el-col :span="19" :offset="5">
                         <el-checkbox v-model="form.remember" style="margin:0 20px;">自动登录</el-checkbox>
-                        <el-button type="primary" style="width:50%" @click="doLogin('name','nameLoginForm')">确认
+                        <el-button type="primary" style="width:50%"
+                                   @click="doLogin('name','nameLoginForm')">确认
                         </el-button>
                     </el-col>
                     <p class="help is-danger" v-show="status" v-text="status"></p>

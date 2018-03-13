@@ -34,6 +34,7 @@ class AdminPanelServiceProvider extends ServiceProvider
             __DIR__ . '/public'                => public_path('/'),
             __DIR__ . '/config/ddvue'          => config_path('ddvue'),
             __DIR__ . '/config/adldap'         => config_path('/'),
+            __DIR__ . '/config/permission.php' => config_path('permission.php'),
             __DIR__ . '/database'              => base_path('/database'),
             __DIR__ . '/resources/assets/js'   => resource_path('assets/js'),
             __DIR__ . '/resources/assets/sass' => resource_path('assets/sass'),
@@ -56,47 +57,6 @@ class AdminPanelServiceProvider extends ServiceProvider
 
     }
 
-    private function setupRoutes()
-    {
-
-       Route::group([
-            'namespace'  => '\DDVue\AdminPanel\app\Http\Controllers',
-            'middleware' => ['web'],
-            'prefix'     => config('ddvue.adminpanel.url_prefix')],
-            function () {
-                require __DIR__ . '/routes/auth.php';
-            });
-
-        $middleware = ['web', config('ddvue.adminpanel.auth.admin_auth_middleware')];
-
-        Route::group([
-            'middleware' => $middleware,
-            'prefix'     => config('ddvue.adminpanel.url_prefix')],
-            function () {
-
-                Route::get('/', '\DDVue\AdminPanel\app\Http\Controllers\AdminPanelController@getIndex')->name('DDVue.AdminPanel.home');
-
-                Route::get('/welcome', function () {
-                    return view('ddvue.adminpanel::welcome');
-                })->name('DDVue.AdminPanel.welcome');
-
-                Route::get('/settingsJson', '\DDVue\AdminPanel\app\Http\Controllers\AdminPanelController@getSettingsJson')->name('DDVue.AdminPanel.settings.json');
-
-                //后台菜单
-                require __DIR__ . '/routes/menu.php';
-
-                //用户管理
-                require __DIR__ . '/routes/user.php';
-
-
-                //Excel上传
-                require __DIR__ . '/routes/excel.php';
-
-            });
-
-
-    }
-
 
     /**
      * Register the application services.
@@ -110,13 +70,61 @@ class AdminPanelServiceProvider extends ServiceProvider
         $loader->alias('AdminPanel', \DDVue\AdminPanel\AdminPanelServiceProvider::class);
 
 
-//        \App::singleton(
-//
-//            \DDVue\AdminPanel\app\Exceptions\Handler::class
-//        );
+        $this->app->register(\Spatie\Permission\PermissionServiceProvider::class);
+    }
 
 
-//        $this->app->register('Kodeine\Acl\AclServiceProvider');
+    private function setupRoutes()
+    {
+
+        Route::group([
+            'namespace'  => '\DDVue\AdminPanel\app\Http\Controllers',
+            'middleware' => ['web'],
+            'prefix'     => config('ddvue.adminpanel.url_prefix')],
+            function () {
+                require __DIR__ . '/routes/auth.php';
+            });
+
+        $middleware = ['web', config('ddvue.adminpanel.auth.admin_auth_middleware')];
+
+        Route::group([
+            'middleware' => $middleware,
+            'prefix'     => config('ddvue.adminpanel.url_prefix')],
+            function () {
+                Route::group(['namespace' => '\DDVue\AdminPanel\app\Http\Controllers'], function () {
+                    Route::get('/', 'AdminPanelController@getIndex')->name('Ddvue.AdminPanel.home');
+                    Route::get('/welcome', function () {
+                        return view('ddvue.adminpanel::welcome');
+                    })->name('Ddvue.AdminPanel.welcome');
+
+                    Route::get('/settingsJson', 'AdminPanelController@getSettingsJson')->name('Ddvue.AdminPanel.settings.json');
+                    Route::get('/changepassword', 'AdminPanelController@changePassword')->name('Ddvue.AdminPanel.changepassword');
+                });
+
+                //后台菜单
+                require __DIR__ . '/routes/menu.php';
+
+                //用户管理
+                require __DIR__ . '/routes/user.php';
+
+                //单位管理
+                require __DIR__ . '/routes/department.php';
+
+
+                //角色管理
+                require __DIR__ . '/routes/role.php';
+
+                //权限
+                require __DIR__ . '/routes/permission.php';
+
+
+
+                //Excel上传
+                require __DIR__ . '/routes/excel.php';
+
+            });
+
+
     }
 
 

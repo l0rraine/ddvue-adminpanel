@@ -14,7 +14,7 @@ export const BaseForm = {
             }
         },
         isEdit: function () {
-            return this.model.id ? true : false;
+            return !!this.model.id;
         }
     },
 
@@ -28,7 +28,7 @@ export const BaseForm = {
     },
     created() {
         if (this.formData !== undefined) {
-            this.model = this.formData;
+            this.form = this.formData;
         }
     },
     methods: {
@@ -36,30 +36,40 @@ export const BaseForm = {
             const that = this;
             let p = '/add';
             if (that.model.id) p = '/edit';
+            const url = that.postUrl || that.getMainUrl() + p;
             that.$refs[formName].validate((valid) => {
                 if (valid) {
-                    that.$http.post(that.getMainUrl() + p, that.form)
+                    that.$http.post(url, that.form)
                         .then(function (response) {
-                            that.show = false;
-                            that.reloadMain();
+                            that.doPostCallback(that);
                         })
                         .catch(function (e) {
-                            const errors = e.response.data.errors;
-                            const form = that.$refs[formName];
-                            form.fields.forEach(function (field) {
-                                Object.keys(errors).forEach(function (e) {
-                                    if (field.prop === e) {
-                                        field.validateState = 'error';
-                                        field.validateMessage = errors[e].join('<br>');
-                                    }
+                            if (e.response) {
+                                const errors = e.response.data.errors;
+                                const form = that.$refs[formName];
+                                form.fields.forEach(function (field) {
+                                    Object.keys(errors).forEach(function (e) {
+                                        if (field.prop === e) {
+                                            field.validateState = 'error';
+                                            field.validateMessage = errors[e].join('<br>');
+                                        }
+                                    });
                                 });
-                            });
+                            } else {
+                                console.log('component error:' + e);
+                            }
+
 
                         });
                     return false;
                 }
             });
 
+        },
+        doPostCallback(that) {
+            that.show = false;
+            // that.reloadMain();
+            that.$bus.emit('afterCrudFormPost', that.form, that.isEdit);
         }
     }
 }

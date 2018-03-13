@@ -31,9 +31,9 @@
 
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li>
-                            <a href="#">
+                            <a href="#" @click="handleSelect('changePassword')">
                                 <i class="fa fa-cog"></i>
-                                设置
+                                修改密码
                             </a>
                         </li>
 
@@ -50,23 +50,6 @@
             </ul>
         </div>
     </div><!-- /.navbar-container -->
-    <!--<el-row type="flex" justify="space-between" style="height:100%;" >-->
-    <!--<el-col :span="20" style="color:white">-->
-    <!--<h3 style="padding:0 20px;">-->
-    <!--{{ title }}-->
-    <!--</h3>-->
-    <!--</el-col>-->
-    <!--<el-col :span="2">-->
-    <!--<el-menu mode="horizontal" @select="handleSelect">-->
-    <!--<el-submenu index="1">-->
-    <!--<template slot="title">-->
-    <!--{{ username }}-->
-    <!--</template>-->
-    <!--<el-menu-item index="logout" @select="handleSelect">退出</el-menu-item>-->
-    <!--</el-submenu>-->
-    <!--</el-menu>-->
-    <!--</el-col>-->
-    <!--</el-row>-->
 </template>
 
 
@@ -80,6 +63,9 @@
         computed: {
             logoutUrl: function () {
                 return `${window.config.dashboard_url_prefix}/logout`;
+            },
+            changePwdUrl:function(){
+                return `${window.config.dashboard_url_prefix}/changepassword`;
             }
         },
         methods: {
@@ -91,6 +77,9 @@
                     }).catch(error => {
                         console.log(that.status);
                     });
+                } else if (action === 'changePassword') {
+                    let that = this;
+                    that.insertEl(that, that.changePwdUrl);
                 }
 
             }

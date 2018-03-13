@@ -1,5 +1,5 @@
 export const BaseList = {
-    props:{
+    props: {
         showImportBtn: {
             type: Boolean,
             default: true
@@ -14,6 +14,9 @@ export const BaseList = {
         },
         breadcrumbData: Object,
         tableDataUrl: String,
+    },
+    mounted(){
+        this.$bus.on('afterCrudFormPost',this.afterFormPost);
     },
     methods: {
         handleEdit: function (index, row) {
@@ -43,7 +46,7 @@ export const BaseList = {
                         type: 'success',
                         message: '删除成功!'
                     });
-                    that.reloadMain();
+                    this.$bus.emit('crudListTableDataLoad');
                 })
             });
         },
@@ -51,6 +54,9 @@ export const BaseList = {
             const url = this.getUrlPrefix() + '/excel';
             this.insertEl(this, url);
 
+        },
+        afterFormPost(data, isEdit) {
+            this.$bus.emit('crudListTableDataLoad');
         }
     }
 }

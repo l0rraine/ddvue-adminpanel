@@ -34,7 +34,7 @@ class NameLoginController extends Controller
      */
     public function __construct()
     {
-        $this->redirectTo = route('DDVue.AdminPanel.home');
+        $this->redirectTo = route('Ddvue.AdminPanel.home');
         $this->middleware('guest')->except('logout');
     }
 

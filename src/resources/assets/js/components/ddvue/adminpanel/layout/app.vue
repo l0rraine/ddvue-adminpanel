@@ -9,9 +9,10 @@
             </ddv-sidebar>
             <el-container>
                 <el-main>
-                    <el-container id="main">
+                    <div id="main">
                         <ddv-welcome></ddv-welcome>
-                    </el-container>
+                    </div>
+
                 </el-main>
                 <el-footer>
                     <span>© 2018 勘探开发研究院计算机室<br>电话:8715872</span>
@@ -41,7 +42,8 @@
                 const that = this;
                 that.$http.get(`${window.config.dashboard_url_prefix}/settingsJson`).then(function (response) {
                     that.settings = response.data;
-                    that.username = response.data.auth.name;
+                    that.username = response.data.auth.displayname || response.data.auth.name;
+                    window.config.loginType = response.data.login_type;
                 }).catch(function (response) {
                     console.log('无法取得管理页面通用配置数据，错误信息如下：\n' + response);
                 });

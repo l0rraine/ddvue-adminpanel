@@ -5,7 +5,7 @@
             :close-on-click-modal="false"
             :close-on-press-escape="false"
             width="30%">
-        <el-form ref="menuEditForm"
+        <el-form ref="departmentEditForm"
                  :model="model"
                  label-width="120px"
                  :rules="rules">
@@ -41,15 +41,13 @@
                 <el-select v-model="model.owners"
                            placeholder="请选择"
                            multiple>
-                    <el-option v-for="(m,i) in ownerItems" :label="m.name" :value="m.id" :key="i"></el-option>
-
-
+                    <ddv-crud-select-recursive-option :items="ownerItems"></ddv-crud-select-recursive-option>
                 </el-select>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button @click="show = false">取 消</el-button>
-            <el-button type="primary" @click="onSubmit('menuEditForm')">确 定</el-button>
+            <el-button type="primary" @click="onSubmit('departmentEditForm')">确 定</el-button>
         </span>
     </el-dialog>
 </template>
@@ -57,7 +55,7 @@
     import {BaseForm} from "../mixins/base-form"
 
     export default {
-        name: 'DdvPageMenuEdit',
+        name: 'DdvPageDepartmentEdit',
         mixins: [BaseForm],
         data() {
             return {
@@ -81,17 +79,6 @@
                     parent_id: [
                         {required: true, message: '必须选择父节点', trigger: 'change'}
                     ]
-                }
-            }
-        },
-        computed: {
-            form: {
-                get: function () {
-                    return this.model;
-                },
-                set: function (val) {
-                    val.owners = val.owners || [];
-                    this.model = val;
                 }
             }
         },

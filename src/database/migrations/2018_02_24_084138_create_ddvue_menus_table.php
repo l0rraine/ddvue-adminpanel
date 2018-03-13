@@ -19,7 +19,7 @@ class CreateDdvueMenusTable extends Migration
             $table->string('index')->nullable()->comment('类型为submenu,group时为空,为item时填写RouteName');
             $table->string('type')->comment('类型：submenu,group,item');
             $table->string('icon')->nullable();
-            $table->string('owners')->nullable()->comment('能够查看该节点的角色id，格式为,1,2,3,');
+            $table->json('owners')->nullable()->default('[]')->comment('能够查看该节点的角色id');
             $table->integer('sort_id')->default(99);
             $table->integer('parent_id');
             $table->string('class_list')->nullable();

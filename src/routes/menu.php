@@ -9,4 +9,5 @@ Route::group(['prefix' => 'menu','namespace'  => '\DDVue\AdminPanel\app\Http\Con
     Route::post('edit', 'AdminMenuController@postEdit')->name('Ddvue.AdminPanel.menu.edit.post');
     Route::post('sort/save', 'AdminMenuController@doSaveSortId')->name('Ddvue.AdminPanel.menu.saveSort');
     Route::post('del', 'AdminMenuController@del')->name('Ddvue.AdminPanel.menu.del');
+    Route::post('assignRole', 'AdminMenuController@assignRole')->name('Ddvue.AdminPanel.menu.assignRole');
 });

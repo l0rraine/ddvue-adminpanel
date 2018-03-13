@@ -10,4 +10,6 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('edit', $controller . '@postEdit')->name('Ddvue.AdminPanel.user.edit.post');
     Route::post('sort/save', $controller . '@doSaveSortId')->name('Ddvue.AdminPanel.user.saveSort');
     Route::post('del', $controller . '@del')->name('Ddvue.AdminPanel.user.del');
+    Route::get('changepassword/{id}', $controller . '@changePassword')->name('Ddvue.AdminPanel.user.changepassword');
+    Route::post('changepassword', $controller . '@doChange')->name('Ddvue.AdminPanel.user.changepassword');
 });
