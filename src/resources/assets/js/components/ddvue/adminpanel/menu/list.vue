@@ -80,7 +80,7 @@
                         type: 'success',
                         message: '分配角色成功!'
                     });
-                    that.reloadMain();
+                    that.afterFormPost();
                 }).catch(function (response) {
                     console.log('提交出错，错误信息如下：\n' + response);
                 });

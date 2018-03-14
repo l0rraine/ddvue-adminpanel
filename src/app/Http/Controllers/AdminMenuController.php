@@ -5,6 +5,7 @@ namespace DDVue\AdminPanel\app\Http\Controllers;
 use DDVue\AdminPanel\app\Models\DdvueMenu;
 use DDVue\Crud\Controllers\CrudController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 
@@ -59,7 +60,7 @@ class AdminMenuController extends CrudController
 
     public function indexJson()
     {
-        $r = $this->menu->getAllByParentId();
+        $r    = $this->menu->getAllByParentId();
 
         return json_encode($r);
     }
@@ -109,7 +110,7 @@ class AdminMenuController extends CrudController
             $menu = $this->menu->find($selection['id']);
 
             $owners = $selection['owners'] ?? [];
-            if (!collect($owners)->has($role)) {
+            if (is_bool(collect($owners)->search($role))) {
                 array_push($owners, $role);
                 $menu->update(['owners' => $owners]);
             }

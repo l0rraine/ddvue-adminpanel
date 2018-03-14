@@ -4,6 +4,7 @@ namespace DDVue\AdminPanel\app\Models;
 
 use DDVue\Crud\app\Models\BaseClassifiedModel;
 use DDVue\Crud\ModelTraits\BaseModelTrait;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -84,4 +85,49 @@ class DdvueMenu extends BaseClassifiedModel
         parent::doAfterCU($data);
         self::setIndex();
     }
+
+    public function getSelectArrayByParentId($pid = 0, $show_root = false, $arr = null)
+    {
+        $roleModelName = config('ddvue.adminpanel.page_settings.role.model');
+        $role          = new $roleModelName();
+        $user          = Auth::user();
+        $menu          = collect();
+        foreach ($this->get() as $m) {
+            $r = $role->whereIn('id', $m['owners'] ?? [])->pluck('id');
+            if ($r->count() && !$user->hasRole($r) && $m['type'] == 'item') {
+                $menu->push($m);
+            }
+        }
+
+        $menu = $this->buildTree($this->get()->toArray(),0,$menu);
+
+        return $menu;
+
+
+    }
+
+
+    private function buildTree(array $elements, $parentId = 0, Collection $menus)
+    {
+        $branch = [];
+        foreach ($elements as $element) {
+            $element = $this->extraActionWhenRecurse($element);
+            if ($element['parent_id'] == $parentId) {
+                $c = $menus->pluck('class_list')->search(function ($item) use ($element) {
+                    return strpos($item, $element['class_list']) === 0;
+                });
+                if (!is_bool($c)) {
+                    $children            = $this->buildTree($elements, $element['id'],$menus);
+                    $element['children'] = $children;
+                    $branch[]            = $element;
+                }
+
+            }
+
+        }
+
+        return $branch;
+    }
+
+
 }
