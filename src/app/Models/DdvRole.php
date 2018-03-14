@@ -61,17 +61,20 @@ class DdvRole extends Role
     public function doAfterCU($data = [])
     {
         $this->update(['updated_at' => Carbon::now()]);
-        $old_permissions = $this->permissions()->pluck('id')->values();
+//        $old_permissions = $this->permissions()->pluck('id')->values();
         $permissions     = collect($data['permissions'])->values();
-        $minus           = $old_permissions->diff($permissions);
-        $add             = $permissions->diff($old_permissions);
-        $permission      = new DdvPermission();
-        foreach ($minus as $p) {
-            $this->revokePermissionTo($permission->find($p));
-        }
 
-        if (count($add))
-            $this->givePermissionTo($permission->whereIn('id', $add)->pluck('name'));
+        $this->syncPermissions($permissions);
+
+//        $minus           = $old_permissions->diff($permissions);
+//        $add             = $permissions->diff($old_permissions);
+//        $permission      = new DdvPermission();
+//        foreach ($minus as $p) {
+//            $this->revokePermissionTo($permission->find($p));
+//        }
+//
+//        if (count($add))
+//            $this->givePermissionTo($permission->whereIn('id', $add)->pluck('name'));
 
 
     }
