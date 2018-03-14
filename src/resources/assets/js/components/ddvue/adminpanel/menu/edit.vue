@@ -37,11 +37,11 @@
                                                       :items="menuItems"></ddv-crud-select-recursive-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="可访问角色" prop="owners">
-                <el-select v-model="model.owners"
+            <el-form-item label="可访问权限" prop="limits">
+                <el-select v-model="model.limits"
                            placeholder="请选择"
                            multiple>
-                    <el-option v-for="(m,i) in ownerItems" :label="m.name" :value="m.id" :key="i"></el-option>
+                    <el-option v-for="(m,i) in permissionItems" :label="m.name" :value="m.id" :key="i"></el-option>
 
 
                 </el-select>
@@ -69,7 +69,7 @@
                     type: '',
                     sort_id: 99,
                     parent_id: '',
-                    owners: ''
+                    limits: ''
                 },
                 rules: {
                     title: [
@@ -90,14 +90,14 @@
                     return this.model;
                 },
                 set: function (val) {
-                    val.owners = val.owners || [];
+                    val.limits = val.limits || [];
                     this.model = val;
                 }
             }
         },
         props: {
             menuItems: Array,
-            ownerItems: Array,
+            permissionItems: Array
         },
         methods: {}
     }

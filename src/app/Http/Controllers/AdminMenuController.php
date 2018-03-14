@@ -18,7 +18,7 @@ class AdminMenuController extends CrudController
     /**
      * @var Role
      */
-    private $role;
+    private $permission;
 
     /**
      * AdminMenuController constructor.
@@ -31,28 +31,27 @@ class AdminMenuController extends CrudController
         parent::__construct();
         $this->menu = $ddvueMenu;
 
-        $roleModelName = config('ddvue.adminpanel.page_settings.role.model');
-        $this->role    = new $roleModelName();
+        $permissionModelName = config('ddvue.adminpanel.page_settings.permission.model');
+        $this->permission    = new $permissionModelName();
     }
 
     public function setup()
     {
         $this->crud->route = 'Ddvue.AdminPanel.menu';
-//        $this->crud->permissionName = 'department';
+
         $this->crud->indexRecursive = true;
         $this->crud->title          = '后台菜单';
         $this->crud->viewName       = 'ddvue.adminpanel::pages.menu';
         $this->crud->setModel(DdvueMenu::class);
 
-//        $this->crud->setPermissionName('list.department');
-
+        $this->crud->setPermissionName('编辑 后台菜单');
         parent::setup();
 
     }
 
     public function getIndex()
     {
-        $this->data['roles'] = $this->role->get()->toArray();
+        $this->data['permissions'] = $this->permission->get()->toArray();
 
         return parent::getIndex();
     }
@@ -61,14 +60,13 @@ class AdminMenuController extends CrudController
     public function indexJson()
     {
         $r    = $this->menu->getAllByParentId();
-
         return json_encode($r);
     }
 
     public function getAdd()
     {
         $this->data['menus'] = $this->menu->getSelectArrayByParentId(0, true);
-        $this->data['roles'] = $this->role->get()->toArray();
+        $this->data['permissions'] = $this->permission->get()->toArray();
         $this->data['title'] = '增加' . $this->crud->title;
 
         return parent::getAdd();
@@ -82,7 +80,7 @@ class AdminMenuController extends CrudController
     public function getEdit($id)
     {
         $this->data['menus'] = $this->menu->getSelectArrayByParentId(0, true);
-        $this->data['roles'] = $this->role->get()->toArray();
+        $this->data['permissions'] = $this->permission->get()->toArray();
         $this->data['title'] = '编辑' . $this->crud->title;
         $this->data['data']  = $this->menu->find($id)->toArray();
 
@@ -101,18 +99,18 @@ class AdminMenuController extends CrudController
     }
 
 
-    public function assignRole(Request $request)
+    public function assignPermission(Request $request)
     {
         $data = $request->all();
-        $role = $data['role_id'];
+        $role = $data['permission_id'];
         foreach ($data['selections'] as $selection) {
 
             $menu = $this->menu->find($selection['id']);
 
-            $owners = $selection['owners'] ?? [];
-            if (is_bool(collect($owners)->search($role))) {
-                array_push($owners, $role);
-                $menu->update(['owners' => $owners]);
+            $limits = $selection['limits'] ?? [];
+            if (is_bool(collect($limits)->search($role))) {
+                array_push($limits, $role);
+                $menu->update(['limits' => $limits]);
             }
         }
     }

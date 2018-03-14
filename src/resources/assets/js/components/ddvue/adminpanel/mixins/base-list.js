@@ -46,7 +46,7 @@ export const BaseList = {
                         type: 'success',
                         message: '删除成功!'
                     });
-                    this.$bus.emit('crudListTableDataLoad');
+                    that.$bus.emit('crudListTableDataLoad');
                 })
             });
         },
@@ -55,7 +55,7 @@ export const BaseList = {
             this.insertEl(this, url);
 
         },
-        afterFormPost(data, isEdit) {
+        afterFormPost() {
             this.$bus.emit('crudListTableDataLoad');
         }
     }

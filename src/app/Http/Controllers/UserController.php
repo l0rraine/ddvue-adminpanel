@@ -33,6 +33,8 @@ class UserController extends CrudController
     {
         parent::__construct();
 
+        $this->crud->permissionName = '编辑 用户';
+
         $roleModelName = config('ddvue.adminpanel.page_settings.role.model');
         $this->role    = new $roleModelName();
 
@@ -44,13 +46,12 @@ class UserController extends CrudController
     public function setup()
     {
         $this->crud->route = 'Ddvue.AdminPanel.user';
-//        $this->crud->permissionName = 'department';
         $this->crud->indexRecursive = true;
         $this->crud->title          = '用户';
         $this->crud->viewName       = config('ddvue.adminpanel.page_settings.user.view');
         $this->crud->setModel(config('ddvue.adminpanel.page_settings.user.model'));
 
-//        $this->crud->setPermissionName('list.department');
+        $this->crud->setPermissionName('编辑 用户');
 
         parent::setup();
 

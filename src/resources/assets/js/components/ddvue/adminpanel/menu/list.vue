@@ -10,16 +10,15 @@
                        @onAdd="handleAdd"
                        @onDelete="handleDelete"
                        @onImport="handleImport"
-                       @onTableDataLoad="onTableLoadData"
                        @onTableSelectionChange="onChange">
             <template slot="check-toggle">
                 <el-dropdown>
                     <el-button type="primary">
-                        分配到角色<i class="el-icon-arrow-down el-icon--right"></i>
+                        分配访问权限<i class="el-icon-arrow-down el-icon--right"></i>
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item v-for="(r,i) in roleItems"
-                                          @click.native="assignRole(r)"
+                        <el-dropdown-item v-for="(r,i) in permissionItems"
+                                          @click.native="assignPermission(r)"
                                           :key="i">{{ r.name }}
                         </el-dropdown-item>
 
@@ -38,7 +37,7 @@
             <el-table-column prop="sort_id" label="排序" width="180"></el-table-column>
             <el-table-column label="所有者" width="180">
                 <template slot-scope="scope">
-                    <el-tag v-for="(p,i) in scope.row.owners" :key="i" style="margin-left:5px;">{{ getRole(p) }}
+                    <el-tag v-for="(p,i) in scope.row.limits" :key="i" style="margin-left:5px;">{{ getPermission(p) }}
                     </el-tag>
                 </template>
             </el-table-column>
@@ -66,19 +65,19 @@
             }
         },
         props: {
-            roleItems: Array,
+            permissionItems: Array,
         },
         methods: {
-            assignRole: function (row) {
+            assignPermission: function (row) {
                 const that = this;
                 const data = {
                     role_id: row.id,
                     selections: that.tableSelections
                 };
-                that.$http.post(`${that.getMainUrl()}/assignRole`, data).then(function (response) {
+                that.$http.post(`${that.getMainUrl()}/assignPermission`, data).then(function (response) {
                     that.$message({
                         type: 'success',
-                        message: '分配角色成功!'
+                        message: '分配权限成功!'
                     });
                     that.afterFormPost();
                 }).catch(function (response) {
@@ -88,11 +87,11 @@
             onChange: function (val) {
                 this.tableSelections = val;
             },
-            getRole(index) {
+            getPermission(index) {
                 const that = this;
                 let name = '';
-                for(let i=0;i<that.roleItems.length;i++){
-                    const r = that.roleItems[i];
+                for(let i=0;i<that.permissionItems.length;i++){
+                    const r = that.permissionItems[i];
                     if (r.id === index) {
                         name = r.name;
                         break;

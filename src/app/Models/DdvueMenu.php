@@ -14,9 +14,9 @@ class DdvueMenu extends BaseClassifiedModel
 
     protected $table = 'ddvue_menus';
 
-    protected $fillable = ['title', 'index', 'type', 'icon', 'owners', 'sort_id', 'parent_id', 'class_list', 'class_layer'];
+    protected $fillable = ['title', 'index', 'type', 'icon', 'limits', 'sort_id', 'parent_id', 'class_list', 'class_layer'];
 
-    protected $casts = ['owners' => 'array'];
+    protected $casts = ['limits' => 'array'];
 
     public static function rules($id = 0, $merge = [])
     {
@@ -88,18 +88,17 @@ class DdvueMenu extends BaseClassifiedModel
 
     public function getSelectArrayByParentId($pid = 0, $show_root = false, $arr = null)
     {
-        $roleModelName = config('ddvue.adminpanel.page_settings.role.model');
-        $role          = new $roleModelName();
-        $user          = Auth::user();
-        $menu          = collect();
+
+        $user = Auth::user();
+        $menu = collect();
         foreach ($this->get() as $m) {
-            $r = $role->whereIn('id', $m['owners'] ?? [])->pluck('id');
-            if ($r->count() && !$user->hasRole($r) && $m['type'] == 'item') {
+            $limits = $m['limits'] ?? [];
+            if ((count($limits) == 0 || $user->hasAnyPermission($limits)) && $m['type'] == 'item') {
                 $menu->push($m);
             }
         }
 
-        $menu = $this->buildTree($this->get()->toArray(),0,$menu);
+        $menu = $this->buildTree($this->get()->toArray(), 0, $menu);
 
         return $menu;
 
@@ -117,7 +116,7 @@ class DdvueMenu extends BaseClassifiedModel
                     return strpos($item, $element['class_list']) === 0;
                 });
                 if (!is_bool($c)) {
-                    $children            = $this->buildTree($elements, $element['id'],$menus);
+                    $children            = $this->buildTree($elements, $element['id'], $menus);
                     $element['children'] = $children;
                     $branch[]            = $element;
                 }
