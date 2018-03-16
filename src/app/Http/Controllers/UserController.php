@@ -4,6 +4,7 @@ namespace DDVue\AdminPanel\app\Http\Controllers;
 
 use DDVue\AdminPanel\app\Models\DdvDepartment;
 use DDVue\AdminPanel\app\Models\DdvRole;
+use DDVue\Crud\app\Models\QueryParam;
 use DDVue\Crud\Controllers\CrudController;
 use DDVue\DepCRUD\app\Models\Department;
 use Illuminate\Auth\Events\PasswordReset;
@@ -53,6 +54,23 @@ class UserController extends CrudController
 
         $this->crud->setPermissionName('编辑 用户');
 
+        $this->crud->addQueryParam(new QueryParam('用户', '', '',
+                                                  [
+                                                      'displayname', 'email'
+                                                  ],
+                                                  [
+                                                      'value' => 'displayname||email'
+                                                  ]
+                                   ));
+        $this->crud->addQueryParam(new QueryParam('单位', 'department', 'dep_id',
+                                                  [
+                                                      'title', 'pinyin'
+                                                  ],
+                                                  [
+                                                      'value' => 'title'
+                                                  ]
+                                   ));
+
         parent::setup();
 
     }
@@ -66,39 +84,6 @@ class UserController extends CrudController
     public function indexJson()
     {
         return parent::makeIndexJson(true);
-    }
-
-    public function makeQueryParam()
-    {
-        //TODO:单位判断，登录方式判断
-        $this->crud->queryParams = [
-            'model'  => config('ddvue.adminpanel.page_settings.user.model'),
-            'groups' => [
-                [
-                    'title'   => '用户',
-                    'join'    => '',
-                    'columns' => [
-                        'displayname', 'email'
-                    ],
-                    'maps'    => [
-                        'value' => 'displayname||email'
-                    ]
-
-                ],
-                [
-                    'title'   => '单位',
-                    'join'    => 'department',
-                    'key'     => 'dep_id',
-                    'columns' => [
-                        'title', 'pinyin'
-                    ],
-                    'maps'    => [
-                        'value' => 'title'
-                    ]
-
-                ]
-            ]
-        ];
     }
 
     public function query(Request $request)

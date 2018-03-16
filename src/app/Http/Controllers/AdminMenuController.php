@@ -3,6 +3,7 @@
 namespace DDVue\AdminPanel\app\Http\Controllers;
 
 use DDVue\AdminPanel\app\Models\DdvueMenu;
+use DDVue\Crud\app\Models\QueryParam;
 use DDVue\Crud\Controllers\CrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,15 @@ class AdminMenuController extends CrudController
         $this->crud->setModel(DdvueMenu::class);
 
         $this->crud->setPermissionName('编辑 后台菜单');
+        $this->crud->addQueryParam(new QueryParam('', '', '',
+                                                  [
+                                                      'title', 'index'
+                                                  ],
+                                                  [
+                                                      'value' => 'title'
+                                                  ]
+                                   ));
+
         parent::setup();
 
     }
@@ -59,15 +69,15 @@ class AdminMenuController extends CrudController
 
     public function indexJson()
     {
-        $r    = $this->menu->getAllByParentId();
-        return json_encode($r);
+        $this->data = $this->crud->model->getAllByParentId();
+        return parent::makeIndexJson();
     }
 
     public function getAdd()
     {
-        $this->data['menus'] = $this->menu->getSelectArrayByParentId(0, true);
+        $this->data['menus']       = $this->menu->getSelectArrayByParentId(0, true);
         $this->data['permissions'] = $this->permission->get()->toArray();
-        $this->data['title'] = '增加' . $this->crud->title;
+        $this->data['title']       = '增加' . $this->crud->title;
 
         return parent::getAdd();
     }
@@ -79,10 +89,10 @@ class AdminMenuController extends CrudController
 
     public function getEdit($id)
     {
-        $this->data['menus'] = $this->menu->getSelectArrayByParentId(0, true);
+        $this->data['menus']       = $this->menu->getSelectArrayByParentId(0, true);
         $this->data['permissions'] = $this->permission->get()->toArray();
-        $this->data['title'] = '编辑' . $this->crud->title;
-        $this->data['data']  = $this->menu->find($id)->toArray();
+        $this->data['title']       = '编辑' . $this->crud->title;
+        $this->data['data']        = $this->menu->find($id)->toArray();
 
         return parent::getEdit($id);
     }

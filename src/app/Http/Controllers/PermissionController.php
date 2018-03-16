@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use DDVue\AdminPanel\app\Models\DdvPermission;
 use DDVue\AdminPanel\app\Models\DdvueMenu;
+use DDVue\Crud\app\Models\QueryParam;
 use DDVue\Crud\Controllers\CrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,15 @@ class PermissionController extends CrudController
         $this->crud->setModel(config('ddvue.adminpanel.page_settings.permission.model'));
 
         $this->crud->setPermissionName('编辑 权限角色');
+
+        $this->crud->addQueryParam(new QueryParam('', '', '',
+                                                  [
+                                                      'name'
+                                                  ],
+                                                  [
+                                                      'value' => 'name'
+                                                  ]
+                                   ));
 
         parent::setup();
 
