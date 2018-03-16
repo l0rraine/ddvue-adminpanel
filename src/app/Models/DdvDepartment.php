@@ -41,4 +41,13 @@ class DdvDepartment extends BaseClassifiedModel
         $this->attributes['title'] = $value;
         $this->attributes['pinyin'] = Pinyin::getShortPinyin($value);
     }
+
+    public function doAfterCU($data)
+    {
+        parent::doAfterCU($data);
+    }
+
+
+
+
 }

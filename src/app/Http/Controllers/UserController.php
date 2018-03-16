@@ -45,7 +45,7 @@ class UserController extends CrudController
 
     public function setup()
     {
-        $this->crud->route = 'Ddvue.AdminPanel.user';
+        $this->crud->route          = 'Ddvue.AdminPanel.user';
         $this->crud->indexRecursive = true;
         $this->crud->title          = '用户';
         $this->crud->viewName       = config('ddvue.adminpanel.page_settings.user.view');
@@ -65,10 +65,47 @@ class UserController extends CrudController
 
     public function indexJson()
     {
-        $this->data = $this->crud->model->get();
-
         return parent::makeIndexJson(true);
     }
+
+    public function makeQueryParam()
+    {
+        //TODO:单位判断，登录方式判断
+        $this->crud->queryParams = [
+            'model'  => config('ddvue.adminpanel.page_settings.user.model'),
+            'groups' => [
+                [
+                    'title'   => '用户',
+                    'join'    => '',
+                    'columns' => [
+                        'displayname', 'email'
+                    ],
+                    'maps'    => [
+                        'value' => 'displayname||email'
+                    ]
+
+                ],
+                [
+                    'title'   => '单位',
+                    'join'    => 'department',
+                    'key'     => 'dep_id',
+                    'columns' => [
+                        'title', 'pinyin'
+                    ],
+                    'maps'    => [
+                        'value' => 'title'
+                    ]
+
+                ]
+            ]
+        ];
+    }
+
+    public function query(Request $request)
+    {
+        return parent::query($request);
+    }
+
 
     public function getAdd()
     {

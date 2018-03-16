@@ -4,6 +4,7 @@ Route::group(['prefix' => 'user'], function () {
     $controller = config('ddvue.adminpanel.page_settings.user.controller');
     Route::get('/', $controller . '@getIndex')->name('Ddvue.AdminPanel.user.index');
     Route::get('indexJson', $controller . '@indexJson')->name('Ddvue.AdminPanel.user.indexJson');
+    Route::post('query', $controller . '@query')->name('Ddvue.AdminPanel.user.query');
     Route::get('add', $controller . '@getAdd')->name('Ddvue.AdminPanel.user.add');
     Route::post('add', $controller . '@postAdd')->name('Ddvue.AdminPanel.user.add.post');
     Route::get('edit/{id}', $controller . '@getEdit')->name('Ddvue.AdminPanel.user.edit');

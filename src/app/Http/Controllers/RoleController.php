@@ -41,7 +41,7 @@ class RoleController extends CrudController
         $this->crud->viewName       = config('ddvue.adminpanel.page_settings.role.view');
         $this->crud->setModel(config('ddvue.adminpanel.page_settings.role.model'));
 
-//        $this->crud->setPermissionName('list.department');
+        $this->crud->setPermissionName('编辑 权限角色');
 
         parent::setup();
 

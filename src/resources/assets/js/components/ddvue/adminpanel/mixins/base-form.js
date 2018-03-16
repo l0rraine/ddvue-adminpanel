@@ -69,7 +69,7 @@ export const BaseForm = {
         doPostCallback(that) {
             that.show = false;
             // that.reloadMain();
-            that.$bus.emit('afterCrudFormPost', that.form, that.isEdit);
+            that.$eventHub.$emit('afterCrudFormPost', that.form, that.isEdit);
         }
     }
 }

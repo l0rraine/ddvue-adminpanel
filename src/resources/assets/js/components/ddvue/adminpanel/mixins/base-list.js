@@ -15,8 +15,8 @@ export const BaseList = {
         breadcrumbData: Object,
         tableDataUrl: String,
     },
-    mounted(){
-        this.$bus.on('afterCrudFormPost',this.afterFormPost);
+    mounted() {
+        this.$eventHub.$on('afterCrudFormPost', this.afterFormPost);
     },
     methods: {
         handleEdit: function (index, row) {
@@ -46,7 +46,7 @@ export const BaseList = {
                         type: 'success',
                         message: '删除成功!'
                     });
-                    that.$bus.emit('crudListTableDataLoad');
+                    that.$eventHub.$emit('crudListTableDataLoad');
                 })
             });
         },
@@ -56,7 +56,9 @@ export const BaseList = {
 
         },
         afterFormPost() {
-            this.$bus.emit('crudListTableDataLoad');
+            this.$eventHub.$off('afterCrudFormPost');
+            this.$eventHub.$emit('crudListTableDataLoad');
+            this.$eventHub.$on('afterCrudFormPost', this.afterFormPost);
         }
     }
 }
