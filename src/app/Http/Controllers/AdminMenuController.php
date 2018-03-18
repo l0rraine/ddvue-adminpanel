@@ -3,10 +3,8 @@
 namespace DDVue\AdminPanel\app\Http\Controllers;
 
 use DDVue\AdminPanel\app\Models\DdvueMenu;
-use DDVue\Crud\app\Models\QueryParam;
 use DDVue\Crud\Controllers\CrudController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 
@@ -46,14 +44,7 @@ class AdminMenuController extends CrudController
         $this->crud->setModel(DdvueMenu::class);
 
         $this->crud->setPermissionName('编辑 后台菜单');
-        $this->crud->addQueryParam(new QueryParam('', '', '',
-                                                  [
-                                                      'title', 'index'
-                                                  ],
-                                                  [
-                                                      'value' => 'title'
-                                                  ]
-                                   ));
+        $this->crud->addQueryParam('',  ['title', 'index'], ['value' => 'title']);
 
         parent::setup();
 
@@ -70,6 +61,7 @@ class AdminMenuController extends CrudController
     public function indexJson()
     {
         $this->data = $this->crud->model->getAllByParentId();
+
         return parent::makeIndexJson();
     }
 

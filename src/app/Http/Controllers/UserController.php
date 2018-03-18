@@ -2,16 +2,9 @@
 
 namespace DDVue\AdminPanel\app\Http\Controllers;
 
-use DDVue\AdminPanel\app\Models\DdvDepartment;
-use DDVue\AdminPanel\app\Models\DdvRole;
-use DDVue\Crud\app\Models\QueryParam;
 use DDVue\Crud\Controllers\CrudController;
 use DDVue\DepCRUD\app\Models\Department;
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
 
@@ -54,22 +47,9 @@ class UserController extends CrudController
 
         $this->crud->setPermissionName('编辑 用户');
 
-        $this->crud->addQueryParam(new QueryParam('用户', '', '',
-                                                  [
-                                                      'displayname', 'email'
-                                                  ],
-                                                  [
-                                                      'value' => 'displayname||email'
-                                                  ]
-                                   ));
-        $this->crud->addQueryParam(new QueryParam('单位', 'department', 'dep_id',
-                                                  [
-                                                      'title', 'pinyin'
-                                                  ],
-                                                  [
-                                                      'value' => 'title'
-                                                  ]
-                                   ));
+        $this->crud->addQueryParam('用户', ['displayname', 'email'], ['value' => 'displayname||email']);
+
+        $this->crud->addQueryParam('单位', ['title', 'pinyin'], ['value' => 'title'], 'department', 'dep_id');
 
         parent::setup();
 

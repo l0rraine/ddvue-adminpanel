@@ -2,15 +2,9 @@
 
 namespace DDVue\AdminPanel\app\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
 use DDVue\AdminPanel\app\Models\DdvPermission;
-use DDVue\AdminPanel\app\Models\DdvueMenu;
-use DDVue\Crud\app\Models\QueryParam;
 use DDVue\Crud\Controllers\CrudController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
 
 
 class RoleController extends CrudController
@@ -30,7 +24,7 @@ class RoleController extends CrudController
         parent::__construct();
 
         $permissionModelName = config('ddvue.adminpanel.page_settings.permission.model');
-        $this->permission = new $permissionModelName();
+        $this->permission    = new $permissionModelName();
     }
 
     public function setup()
@@ -44,14 +38,8 @@ class RoleController extends CrudController
 
         $this->crud->setPermissionName('编辑 权限角色');
 
-        $this->crud->addQueryParam(new QueryParam('', '', '',
-                                                  [
-                                                      'name'
-                                                  ],
-                                                  [
-                                                      'value' => 'name'
-                                                  ]
-                                   ));
+        $this->crud->addQueryParam('角色', ['name'], ['value' => 'name']);
+
 
         parent::setup();
 
@@ -73,7 +61,7 @@ class RoleController extends CrudController
     public function getAdd()
     {
         $this->data['permissions'] = $this->permission->get()->toArray();
-        $this->data['guards']  = collect(config('auth.guards'))->keys();
+        $this->data['guards']      = collect(config('auth.guards'))->keys();
 
         return parent::getAdd();
     }
@@ -86,8 +74,8 @@ class RoleController extends CrudController
     public function getEdit($id)
     {
         $this->data['permissions'] = $this->permission->get()->toArray();
-        $this->data['data']  = $this->crud->model->find($id)->toArray();
-        $this->data['guards']  = collect(config('auth.guards'))->keys();
+        $this->data['data']        = $this->crud->model->find($id)->toArray();
+        $this->data['guards']      = collect(config('auth.guards'))->keys();
 
         return parent::getEdit($id);
     }
@@ -95,6 +83,7 @@ class RoleController extends CrudController
     public function postEdit(Request $request)
     {
         $this->doAfterCrudData = $request->all();
+
         return parent::updateCrud($request);
     }
 

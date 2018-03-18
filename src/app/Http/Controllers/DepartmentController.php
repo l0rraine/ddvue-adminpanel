@@ -2,12 +2,8 @@
 
 namespace DDVue\AdminPanel\app\Http\Controllers;
 
-use DDVue\AdminPanel\app\Models\DdvueMenu;
-use DDVue\Crud\app\Models\QueryParam;
 use DDVue\Crud\Controllers\CrudController;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 
 
 class DepartmentController extends CrudController
@@ -27,14 +23,7 @@ class DepartmentController extends CrudController
         $this->crud->setModel(config('ddvue.adminpanel.page_settings.department.model'));
         $this->crud->setPermissionName('编辑 单位');
 
-        $this->crud->addQueryParam(new QueryParam('', '', '',
-                                                  [
-                                                      'title', 'pinyin', 'center_code'
-                                                  ],
-                                                  [
-                                                      'value' => 'title'
-                                                  ]
-                                   ));
+        $this->crud->addQueryParam('', ['title', 'pinyin', 'center_code'], ['value' => 'title']);
         parent::setup();
 
     }

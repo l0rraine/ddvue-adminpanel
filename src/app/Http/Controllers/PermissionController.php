@@ -2,15 +2,8 @@
 
 namespace DDVue\AdminPanel\app\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use DDVue\AdminPanel\app\Models\DdvPermission;
-use DDVue\AdminPanel\app\Models\DdvueMenu;
-use DDVue\Crud\app\Models\QueryParam;
 use DDVue\Crud\Controllers\CrudController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
 
 
 class PermissionController extends CrudController
@@ -37,14 +30,7 @@ class PermissionController extends CrudController
 
         $this->crud->setPermissionName('编辑 权限角色');
 
-        $this->crud->addQueryParam(new QueryParam('', '', '',
-                                                  [
-                                                      'name'
-                                                  ],
-                                                  [
-                                                      'value' => 'name'
-                                                  ]
-                                   ));
+        $this->crud->addQueryParam('',  ['name'], ['value' => 'name']);
 
         parent::setup();
 
@@ -65,7 +51,7 @@ class PermissionController extends CrudController
 
     public function getAdd()
     {
-        $this->data['guards']  = collect(config('auth.guards'))->keys();
+        $this->data['guards'] = collect(config('auth.guards'))->keys();
 
         return parent::getAdd();
     }
@@ -77,8 +63,8 @@ class PermissionController extends CrudController
 
     public function getEdit($id)
     {
-        $this->data['data']  = $this->crud->model->find($id)->toArray();
-        $this->data['guards']  = collect(config('auth.guards'))->keys();
+        $this->data['data']   = $this->crud->model->find($id)->toArray();
+        $this->data['guards'] = collect(config('auth.guards'))->keys();
 
         return parent::getEdit($id);
     }
