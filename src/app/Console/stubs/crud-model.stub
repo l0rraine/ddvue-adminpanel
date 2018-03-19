@@ -1,0 +1,43 @@
+<?php
+
+namespace DummyNamespace;
+
+use DDVue\Crud\ModelTraits\BaseModelTrait;
+use Illuminate\Database\Eloquent\Model;
+
+class DummyClass extends Model
+{
+    use BaseModelTrait;
+
+    /**
+     * @var string 表名
+     */
+    //protected $table = 'DummyTable';
+
+    /**
+     * @var array 可批量填充的字段，添加更新时用到
+     */
+    protected $fillable = [];
+
+    public static function rules($id = 0, $merge = [])
+    {
+        return array_merge([
+                               //增改时验证条件
+                           ], $merge);
+    }
+
+    public static function messages($id = 0, $merge = [])
+    {
+        return array_merge([
+                               //增改时错误信息
+                           ], $merge);
+    }
+
+
+    public function doAfterCU($data)
+    {
+
+    }
+
+
+}

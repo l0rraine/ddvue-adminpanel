@@ -1,8 +1,8 @@
 <template>
     <ddv-main :breadcrumbData="breadcrumbData">
         <ddv-crud-list :tableDataUrl="tableDataUrl"
-                       :showTablePagination="true"
-                       :tableIsRecursive="false"
+                       :showTablePagination="showTablePagination"
+                       :tableIsRecursive="tableIsRecursive"
                        slot="content"
                        :showImportBtn="showImportBtn"
                        :showAddBtn="showAddBtn"
@@ -10,20 +10,20 @@
                        @onAdd="handleAdd"
                        @onDelete="handleDelete"
                        @onImport="handleImport">
-            <el-table-column prop="name" label="名称" width="180"></el-table-column>
-            <el-table-column prop="guard_name" label="GuardName" width="180"></el-table-column>
-            <el-table-column label="权限">
-                <template slot-scope="scope">
-                    <el-tag v-for="(p,i) in scope.row.permissions" :key="i" style="margin-left:5px;">{{ p.name }}</el-tag>
-                </template>
-            </el-table-column>
-            <el-table-column prop="updated_at" label="更新时间" width="180"></el-table-column>
+            <!--<template slot="check-toggle">在这里添加选择才会显示的按钮</template>-->
+
+            <!--<template slot="fix-slot">在这里添加固定显示的按钮</template>-->
+
+            <!-- 在这里添加 <el-table-column> -->
             <el-table-column label="操作" width="100">
                 <template slot-scope="scope">
                     <el-button type="primary"
                                size="mini"
                                @click="handleEdit(scope.$index, scope.row)">编辑
                     </el-button>
+
+                    <!-- 在这里添加列按钮 -->
+
                 </template>
             </el-table-column>
         </ddv-crud-list>
@@ -31,10 +31,10 @@
 
 </template>
 <script>
-    import {BaseList} from '../mixins/base-list'
+    import {BaseList} from '../../ddvue/adminpanel/mixins/base-list'
 
     export default {
-        name: 'DdvPageRoleList',
+        name: 'dummy',
         mixins: [BaseList]
     }
 </script>

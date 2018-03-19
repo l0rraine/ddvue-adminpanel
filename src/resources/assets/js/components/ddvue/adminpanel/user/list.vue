@@ -1,7 +1,7 @@
 <template>
     <ddv-main :breadcrumbData="breadcrumbData">
         <ddv-crud-list :tableDataUrl="tableDataUrl"
-                       :showTablepagination="true"
+                       :showTablePagination="true"
                        :tableIsRecursive="false"
                        slot="content"
                        :showImportBtn="false"

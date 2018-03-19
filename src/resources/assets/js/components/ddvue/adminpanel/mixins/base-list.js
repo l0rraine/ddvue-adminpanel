@@ -12,6 +12,14 @@ export const BaseList = {
             type: Boolean,
             default: true
         },
+        showTablePagination: {
+            type: Boolean,
+            default: true
+        },
+        tableIsRecursive: {
+            type: Boolean,
+            default: false
+        },
         breadcrumbData: Object,
         tableDataUrl: String,
     },

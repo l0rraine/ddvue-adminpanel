@@ -1,0 +1,81 @@
+<?php
+
+namespace DummyNamespace;
+
+use DDVue\Crud\Controllers\CrudController;
+use Illuminate\Http\Request;
+
+
+class DummyClassCrudController extends CrudController
+{
+
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+
+    public function setup()
+    {
+
+        $this->crud->route          = 'dummy_route';
+        //模型是否在列表中显示父子关系
+        $this->crud->indexRecursive = false;
+        $this->crud->title          = '';
+        $this->crud->viewName       = 'dummy_viewname';
+        $this->crud->setModel('dummy_model');
+        $this->crud->setPermissionName('');
+
+        $this->crud->addQueryParam('', [], []);
+        parent::setup();
+
+    }
+
+    public function getIndex()
+    {
+        return parent::getIndex();
+    }
+
+
+    public function indexJson()
+    {
+        //数据必须在 $this->data 里，默认设置为 $this->data = $this->crud->model->where($param->key, $param->id)->get();
+        //分页时 return parent::makeIndexJson(true);
+        return parent::makeIndexJson();
+    }
+
+    public function getAdd()
+    {
+        return parent::getAdd();
+    }
+
+    public function postAdd(Request $request)
+    {
+        //增加后有要进行的操作需要设置 $this->doAfterCrudData，之后在模型中写方法
+        return parent::storeCrud($request);
+    }
+
+
+    public function getEdit($id)
+    {
+        //数据设置在数组 $this->data 里，模型信息必须放在 $this->data['data']里
+        //默认已设置 $this->data['data'] = $this->crud->model->find($id);
+
+        return parent::getEdit($id);
+    }
+
+    public function postEdit(Request $request)
+    {
+        //修改后有要进行的操作需要设置 $this->doAfterCrudData，之后在模型中写方法
+        return parent::updateCrud($request);
+    }
+
+
+    public function del(Request $request)
+    {
+        return parent::del($request);
+    }
+
+
+}

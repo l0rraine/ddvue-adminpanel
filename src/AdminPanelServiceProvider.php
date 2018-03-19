@@ -2,6 +2,12 @@
 
 namespace DDVue\AdminPanel;
 
+use DDVue\AdminPanel\app\Console\Commands\CrudControllerCommand;
+use DDVue\AdminPanel\app\Console\Commands\CrudModelCommand;
+use DDVue\AdminPanel\app\Console\Commands\CrudViewListCommand;
+use DDVue\AdminPanel\app\Console\Commands\CrudViewStoreCommand;
+use DDVue\AdminPanel\app\Console\Commands\CrudVueEditCommand;
+use DDVue\AdminPanel\app\Console\Commands\CrudVueListCommand;
 use DDVue\Crud\CrudRoute;
 use Illuminate\Auth\SessionGuard;
 use Illuminate\Support\Facades\Route;
@@ -31,16 +37,16 @@ class AdminPanelServiceProvider extends ServiceProvider
 
 
         $this->publishes([
-            __DIR__ . '/resources/views'       => resource_path('views/vendor/ddvue/adminpanel'),
-            __DIR__ . '/public'                => public_path('/'),
-            __DIR__ . '/config/ddvue'          => config_path('ddvue'),
-            __DIR__ . '/config/adldap'         => config_path('/'),
-            __DIR__ . '/config/permission.php' => config_path('permission.php'),
-            __DIR__ . '/database'              => base_path('/database'),
-            __DIR__ . '/resources/assets/js'   => resource_path('assets/js'),
-            __DIR__ . '/resources/assets/sass' => resource_path('assets/sass'),
+                             __DIR__ . '/resources/views'       => resource_path('views/vendor/ddvue/adminpanel'),
+                             __DIR__ . '/public'                => public_path('/'),
+                             __DIR__ . '/config/ddvue'          => config_path('ddvue'),
+                             __DIR__ . '/config/adldap'         => config_path('/'),
+                             __DIR__ . '/config/permission.php' => config_path('permission.php'),
+                             __DIR__ . '/database'              => base_path('/database'),
+                             __DIR__ . '/resources/assets/js'   => resource_path('assets/js'),
+                             __DIR__ . '/resources/assets/sass' => resource_path('assets/sass'),
 
-        ], 'ddvue-adminpanel');
+                         ], 'ddvue-adminpanel');
 
 
         $this->mergeConfigFrom(__DIR__ . '/config/ddvue/guards/ddvue_db.php', 'auth.guards.ddvue_db');
@@ -67,6 +73,15 @@ class AdminPanelServiceProvider extends ServiceProvider
     public function register()
     {
         $this->setupRoutes();
+        $this->commands([
+                            CrudControllerCommand::class,
+                            CrudModelCommand::class,
+                            CrudViewListCommand::class,
+                            CrudViewStoreCommand::class,
+                            CrudVueListCommand::class,
+                            CrudVueEditCommand::class,
+                        ]);
+
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('AdminPanel', \DDVue\AdminPanel\AdminPanelServiceProvider::class);
 
@@ -79,9 +94,9 @@ class AdminPanelServiceProvider extends ServiceProvider
     {
 
         Route::group([
-            'namespace'  => '\DDVue\AdminPanel\app\Http\Controllers',
-            'middleware' => ['web'],
-            'prefix'     => config('ddvue.adminpanel.url_prefix')],
+                         'namespace'  => '\DDVue\AdminPanel\app\Http\Controllers',
+                         'middleware' => ['web'],
+                         'prefix'     => config('ddvue.adminpanel.url_prefix')],
             function () {
                 require __DIR__ . '/routes/auth.php';
             });
@@ -89,8 +104,8 @@ class AdminPanelServiceProvider extends ServiceProvider
         $middleware = ['web', config('ddvue.adminpanel.auth.admin_auth_middleware')];
 
         Route::group([
-            'middleware' => $middleware,
-            'prefix'     => config('ddvue.adminpanel.url_prefix')],
+                         'middleware' => $middleware,
+                         'prefix'     => config('ddvue.adminpanel.url_prefix')],
             function () {
                 Route::group(['namespace' => '\DDVue\AdminPanel\app\Http\Controllers'], function () {
                     Route::get('/', 'AdminPanelController@getIndex')->name('Ddvue.AdminPanel.home');
@@ -103,23 +118,22 @@ class AdminPanelServiceProvider extends ServiceProvider
                 });
 
                 //后台菜单
-                CrudRoute::make('menu','DDVue\AdminPanel\app\Http\Controllers\AdminMenuController','Ddvue.AdminPanel.menu');
+                CrudRoute::make('menu', 'DDVue\AdminPanel\app\Http\Controllers\AdminMenuController', 'Ddvue.AdminPanel.menu');
 
                 //用户管理
                 $controller = config('ddvue.adminpanel.page_settings.user.controller');
                 Route::get('user/changepassword/{id}', $controller . '@changePassword')->name('Ddvue.AdminPanel.user.changepassword');
                 Route::post('user/changepassword', $controller . '@doChange')->name('Ddvue.AdminPanel.user.changepassword');
-                CrudRoute::make('user',$controller,'Ddvue.AdminPanel.user');
+                CrudRoute::make('user', $controller, 'Ddvue.AdminPanel.user');
 
                 //单位管理
-                CrudRoute::make('department', config('ddvue.adminpanel.page_settings.department.controller'),'Ddvue.AdminPanel.department');
+                CrudRoute::make('department', config('ddvue.adminpanel.page_settings.department.controller'), 'Ddvue.AdminPanel.department');
 
                 //角色管理
-                CrudRoute::make('role', config('ddvue.adminpanel.page_settings.role.controller'),'Ddvue.AdminPanel.role');
+                CrudRoute::make('role', config('ddvue.adminpanel.page_settings.role.controller'), 'Ddvue.AdminPanel.role');
 
                 //权限
-                CrudRoute::make('permission', config('ddvue.adminpanel.page_settings.permission.controller'),'Ddvue.AdminPanel.permission');
-
+                CrudRoute::make('permission', config('ddvue.adminpanel.page_settings.permission.controller'), 'Ddvue.AdminPanel.permission');
 
 
                 //Excel上传
