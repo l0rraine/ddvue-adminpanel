@@ -2,6 +2,7 @@
 
 namespace DDVue\AdminPanel;
 
+use DDVue\Crud\CrudRoute;
 use Illuminate\Auth\SessionGuard;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -102,20 +103,22 @@ class AdminPanelServiceProvider extends ServiceProvider
                 });
 
                 //后台菜单
-                require __DIR__ . '/routes/menu.php';
+                CrudRoute::make('menu','DDVue\AdminPanel\app\Http\Controllers\AdminMenuController','Ddvue.AdminPanel.menu');
 
                 //用户管理
-                require __DIR__ . '/routes/user.php';
+                $controller = config('ddvue.adminpanel.page_settings.user.controller');
+                Route::get('user/changepassword/{id}', $controller . '@changePassword')->name('Ddvue.AdminPanel.user.changepassword');
+                Route::post('user/changepassword', $controller . '@doChange')->name('Ddvue.AdminPanel.user.changepassword');
+                CrudRoute::make('user',$controller,'Ddvue.AdminPanel.user');
 
                 //单位管理
-                require __DIR__ . '/routes/department.php';
-
+                CrudRoute::make('department', config('ddvue.adminpanel.page_settings.department.controller'),'Ddvue.AdminPanel.department');
 
                 //角色管理
-                require __DIR__ . '/routes/role.php';
+                CrudRoute::make('role', config('ddvue.adminpanel.page_settings.role.controller'),'Ddvue.AdminPanel.role');
 
                 //权限
-                require __DIR__ . '/routes/permission.php';
+                CrudRoute::make('permission', config('ddvue.adminpanel.page_settings.permission.controller'),'Ddvue.AdminPanel.permission');
 
 
 
