@@ -41,8 +41,8 @@ class DummyClassCrudController extends CrudController
     public function indexJson()
     {
         //数据必须在 $this->data 里，默认设置为 $this->data = $this->crud->model->where($param->key, $param->id)->get();
-        //分页时 return parent::makeIndexJson(true);
-        return parent::makeIndexJson();
+
+        return parent::makeIndexJson(true);
     }
 
     public function getAdd()

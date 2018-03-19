@@ -15,6 +15,8 @@
             <!--<template slot="fix-slot">在这里添加固定显示的按钮</template>-->
 
             <!-- 在这里添加 <el-table-column> -->
+
+            <el-table-column label="更新时间" prop="updated_at" width="180"></el-table-column>
             <el-table-column label="操作" width="100">
                 <template slot-scope="scope">
                     <el-button type="primary"

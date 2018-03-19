@@ -23,6 +23,7 @@ class DummyClass extends Model
     {
         return array_merge([
                                //增改时验证条件
+                               //'title' => 'required',
                            ], $merge);
     }
 
@@ -30,6 +31,7 @@ class DummyClass extends Model
     {
         return array_merge([
                                //增改时错误信息
+                               //'title.required' => '必须填写名称',
                            ], $merge);
     }
 

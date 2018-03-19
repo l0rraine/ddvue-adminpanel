@@ -11,6 +11,9 @@
                  :rules="rules">
 
             <!-- 在这里添加 <el-form-item> -->
+            <!--<el-form-item label="名称" prop="title">-->
+                <!--<el-input v-model="model.title"></el-input>-->
+            <!--</el-form-item>-->
 
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -30,6 +33,9 @@
                 model: {
                 },
                 rules: {
+                    // title: [
+                    //     {required: true, message: '请输入名称', trigger: 'blur'}
+                    // ],
                 }
             }
         },
