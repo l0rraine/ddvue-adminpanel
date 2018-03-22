@@ -1,5 +1,5 @@
 <template>
-    <el-upload
+    <el-upload style="width:100%;"
             class="upload"
             drag
             action="https://jsonplaceholder.typicode.com/posts/"
@@ -53,5 +53,6 @@
 
     .el-upload-dragger {
         margin: 0 auto;
+        border: 0px;
     }
 </style>
