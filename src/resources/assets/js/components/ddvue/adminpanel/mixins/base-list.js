@@ -27,6 +27,9 @@ export const BaseList = {
         this.$eventHub.$on('afterCrudFormPost', this.afterFormPost);
     },
     methods: {
+        dateFormatter(row, column, cellValue) {
+            return cellValue.substr(0, 10);
+        },
         handleEdit: function (index, row) {
             let that = this,
                 url  = `${that.getMainUrl()}/edit/${row.id}`;
