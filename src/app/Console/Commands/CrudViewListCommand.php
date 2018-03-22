@@ -20,7 +20,6 @@ class CrudViewListCommand extends GeneratorCommand
 
     protected function getPath($name)
     {
-        $name = $this->getNameInput();
         return $this->laravel['path'] . '/../resources/views/admin/pages/' . $name . '/list.blade.php';
     }
 
@@ -30,7 +29,8 @@ class CrudViewListCommand extends GeneratorCommand
     }
 
 
-    protected function replaceNameStrings(&$stub, $name)    {
+    protected function replaceNameStrings(&$stub, $name)
+    {
 
         $stub = str_replace('dummy', $name, $stub);
 
@@ -40,21 +40,22 @@ class CrudViewListCommand extends GeneratorCommand
     protected function buildClass($name)
     {
         $stub = $this->files->get($this->getStub());
-        $name = $this->getNameInput();
+        $name = strtolower($this->getNameInput());
 
         return $this->replaceNamespace($stub, $name)->replaceNameStrings($stub, $name)->replaceClass($stub, $name);
     }
 
     public function handle()
     {
-        $name = $this->getNameInput();
+        $name = strtolower($this->getNameInput());
         $path = $this->getPath($name);
         if ($this->alreadyExists($this->getNameInput())) {
-            $this->error($this->type.' already exists!');
+            $this->error($this->type . ' already exists!');
+
             return false;
         }
         $this->makeDirectory($path);
         $this->files->put($path, $this->buildClass($name));
-        $this->info($this->type.' created successfully.');
+        $this->info($this->type . ' created successfully.');
     }
 }

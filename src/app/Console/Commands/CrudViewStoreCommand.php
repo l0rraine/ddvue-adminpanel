@@ -20,7 +20,6 @@ class CrudViewStoreCommand extends GeneratorCommand
 
     protected function getPath($name)
     {
-        $name = $this->getNameInput();
         return $this->laravel['path'] . '/../resources/views/admin/pages/' . $name . '/store.blade.php';
     }
 
@@ -40,14 +39,14 @@ class CrudViewStoreCommand extends GeneratorCommand
     protected function buildClass($name)
     {
         $stub = $this->files->get($this->getStub());
-        $name = $this->getNameInput();
+        $name = strtolower($this->getNameInput());
 
         return $this->replaceNamespace($stub, $name)->replaceNameStrings($stub, $name)->replaceClass($stub, $name);
     }
 
     public function handle()
     {
-        $name = $this->getNameInput();
+        $name = strtolower($this->getNameInput());
         $path = $this->getPath($name);
         if ($this->alreadyExists($this->getNameInput())) {
             $this->error($this->type.' already exists!');

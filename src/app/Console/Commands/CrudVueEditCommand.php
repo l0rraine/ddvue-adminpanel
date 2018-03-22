@@ -16,12 +16,10 @@ class CrudVueEditCommand extends GeneratorCommand
     protected $name        = 'crud:vue-edit';
     protected $signature   = 'crud:vue-edit {name}';
     protected $description = '生成一个 CRUD 编辑 vue 组件';
-    protected $type        = 'View';
+    protected $type        = 'Vue';
 
     protected function getPath($name)
     {
-        $name = $this->getNameInput();
-
         return $this->laravel['path'] . '/../resources/assets/js/components/admin/' . $name . '/edit.vue';
     }
 
@@ -43,14 +41,14 @@ class CrudVueEditCommand extends GeneratorCommand
     protected function buildClass($name)
     {
         $stub = $this->files->get($this->getStub());
-        $name = $this->getNameInput();
+        $name = strtolower($this->getNameInput());
 
         return $this->replaceNamespace($stub, $name)->replaceNameStrings($stub, $name)->replaceClass($stub, $name);
     }
 
     public function handle()
     {
-        $name = $this->getNameInput();
+        $name = strtolower($this->getNameInput());
         $path = $this->getPath($name);
         if ($this->alreadyExists($this->getNameInput())) {
             $this->error($this->type . ' already exists!');
