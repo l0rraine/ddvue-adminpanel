@@ -55,18 +55,22 @@ class DdvUser extends Authenticatable
 
     public function doAfterCU($data = [])
     {
-        $this->resetPassword($data['password']);
+        if(!isset($data['password'])){
+            $this->resetPassword($data['password']);
+        }
+        foreach ($data['roles'] as $r) {
+            $this->assignRole($data['roles']);
+        }
+
+
     }
 
 
     function resetPassword($password)
     {
         $this->password = Hash::make($password);
-
         $this->setRememberToken(Str::random(60));
-
         $this->save();
-
         event(new PasswordReset($this));
     }
 

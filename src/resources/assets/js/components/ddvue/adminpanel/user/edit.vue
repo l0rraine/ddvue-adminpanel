@@ -46,7 +46,7 @@
             </el-form-item>
             <el-form-item label="角色" prop="roles">
                 <el-select v-model="model.roles" placeholder="" multiple>
-                    <el-option v-for="(r,i) in roleItems" :label="r.name" :value="r.id" :key="i"></el-option>
+                    <el-option v-for="(m,i) in roleItems" :label="m.name" :value="m.id" :key="i"></el-option>
                 </el-select>
             </el-form-item>
         </el-form>
@@ -88,7 +88,7 @@
                     callback(new Error('请输入密码'));
                 } else {
                     if (that.model.password_confirmation !== '') {
-                        that.$refs.userEditForm.validateField('password_confirmation');
+                        that.$refs['userEditForm'].validateField('password_confirmation');
                     }
                     callback();
                 }
@@ -102,13 +102,13 @@
                     callback();
                 }
             };
-            if (that.loginType!=='nameOnly') {
+            if (that.loginType !== 'nameOnly') {
                 that.rules.email = [
                     {required: true, message: '必须输入邮箱', trigger: 'blur'}
                 ];
             }
 
-            if (that.loginType!=='ldapOnly') {
+            if (that.loginType !== 'ldapOnly') {
                 that.rules.name = [
                     {required: true, message: '必须输入用户名', trigger: 'blur'}
                 ];
@@ -125,17 +125,32 @@
             roleItems: Array,
         },
         computed: {
-            loginType:function(){
-                if(window.config.loginType==='nameOnly'){
-                    this.model.email = this.model.email || this.randomString(12)+'.slyt';
+            loginType: function () {
+                if (window.config.loginType === 'nameOnly') {
+                    this.model.email = this.model.email || this.randomString(12) + '.slyt';
                 }
 
-                if(window.config.loginType==='ldapOnly'){
+                if (window.config.loginType === 'ldapOnly') {
                     this.model.name = this.model.name || this.randomString(12);
                     this.model.password = this.model.password || this.randomString(12);
                     this.model.password_confirmation = this.model.password;
                 }
                 return window.config.loginType;
+            },
+            form: {
+                get: function () {
+                    return this.model;
+                },
+                set: function (v) {
+                    console.log(v.roles)
+                    let roles = [];
+                    v.roles.forEach(function (r) {
+                        roles.push(r.id);
+                    });
+                    v.roles = roles;
+                    this.model = v;
+
+                }
             }
         },
         methods: {
