@@ -58,9 +58,8 @@ class DdvUser extends Authenticatable
         if(!isset($data['password'])){
             $this->resetPassword($data['password']);
         }
-        foreach ($data['roles'] as $r) {
-            $this->assignRole($data['roles']);
-        }
+
+        $this->syncRoles($data['roles']);
 
 
     }
