@@ -22,6 +22,14 @@ export const BaseList = {
         },
         breadcrumbData: Object,
         tableDataUrl: String,
+        tableQueryUrl: {
+            type: String,
+            default: ''
+        },
+        tableEventName: {
+            type: String,
+            default: 'crudListTableChanged'
+        },
     },
     mounted() {
         this.$eventHub.$on('afterCrudFormPost', this.afterFormPost);
@@ -57,7 +65,7 @@ export const BaseList = {
                         type: 'success',
                         message: '删除成功!'
                     });
-                    that.$eventHub.$emit('crudListTableDataLoad');
+                    that.$eventHub.$emit(that.tableEventName);
                 })
             });
         },
@@ -68,7 +76,7 @@ export const BaseList = {
         },
         afterFormPost() {
             this.$eventHub.$off('afterCrudFormPost');
-            this.$eventHub.$emit('crudListTableDataLoad');
+            this.$eventHub.$emit(this.tableEventName);
             this.$eventHub.$on('afterCrudFormPost', this.afterFormPost);
         }
     }

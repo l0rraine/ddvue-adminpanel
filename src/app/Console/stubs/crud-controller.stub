@@ -52,7 +52,7 @@ class DummyClassCrudController extends CrudController
 
     public function postAdd(Request $request)
     {
-        //增加后有要进行的操作需要设置 $this->doAfterCrudData，之后在模型中写方法
+        //增加后有要进行的操作需要设置 $this->doAfterCrudData(默认为$this->data)，之后在模型中写方法
         return parent::storeCrud($request);
     }
 
@@ -67,7 +67,7 @@ class DummyClassCrudController extends CrudController
 
     public function postEdit(Request $request)
     {
-        //修改后有要进行的操作需要设置 $this->doAfterCrudData，之后在模型中写方法
+        //修改后有要进行的操作需要设置 $this->doAfterCrudData(默认为$this->data)，之后在模型中写方法
         return parent::updateCrud($request);
     }
 
