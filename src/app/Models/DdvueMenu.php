@@ -93,7 +93,7 @@ class DdvueMenu extends BaseClassifiedModel
         $menu = collect();
         foreach ($this->get() as $m) {
             $limits = $m['limits'] ?? [];
-            if ((count($limits) == 0 || $user->hasAnyPermission($limits)) && $m['type'] == 'item') {
+            if ((count($limits) == 0 || $user->hasAnyPermission($limits))) {  //&& $m['type'] == 'item'
                 $menu->push($m);
             }
         }

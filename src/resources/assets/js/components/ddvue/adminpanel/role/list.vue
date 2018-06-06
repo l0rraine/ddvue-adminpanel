@@ -14,7 +14,7 @@
             <el-table-column prop="guard_name" label="GuardName" width="180"></el-table-column>
             <el-table-column label="权限">
                 <template slot-scope="scope">
-                    <el-tag v-for="(p,i) in scope.row.permissions" :key="i" style="margin-left:5px;">{{ p.name }}</el-tag>
+                    <el-tag v-for="(p,i) in scope.row.permissions" :key="i" disable-transitions style="margin-left:5px;">{{ p.name }}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column prop="updated_at" label="更新时间" width="180"></el-table-column>

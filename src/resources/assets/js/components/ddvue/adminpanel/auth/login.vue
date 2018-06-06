@@ -10,7 +10,7 @@
                 <el-form-item label="密码" prop="password">
                     <el-input type="password"
                               v-model="form.password"
-                              @keyup.enter="doLogin('ldap','ldapLoginForm')" >
+                              @keyup.enter="doLogin('ldap','ldapLoginForm')">
                     </el-input>
                 </el-form-item>
                 <el-row>
@@ -38,7 +38,7 @@
                 <el-form-item label="密码" prop="password">
                     <el-input type="password"
                               v-model="form.password"
-                              @keyup.enter="doLogin('name','nameLoginForm')" >
+                              @keyup.enter="doLogin('name','nameLoginForm')">
                     </el-input>
                 </el-form-item>
                 <el-row>
@@ -54,75 +54,78 @@
                                    @click="doLogin('name','nameLoginForm')">确认
                         </el-button>
                     </el-col>
-                    <p class="help is-danger" v-show="status" v-text="status"></p>
-
+                    <span class="help-block" style="color: red;margin-left: 40px;"  v-show="status" v-text="status"></span>
                 </el-row>
             </el-form>
         </el-tab-pane>
     </el-tabs>
 </template>
 <script>
-    export default {
-        name: 'DdvLogin',
-        computed: {
-            activeName: {
-                get () {
-                    return this.showLdap  ? "1" : "2";
-                },
-                set () { }
-
-            },
-            showLdap: function () {
-                return this.type === 'ldap' || this.type === 'mix';
-            },
-            showUsername: function () {
-                return this.type === 'db' || this.type === 'mix';
-            },
-            urlPrefix: function () {
-                return window.config.dashboard_url_prefix;
-            }
+  export default {
+    name: 'DdvLogin',
+    computed: {
+      activeName: {
+        get() {
+          return this.showLdap ? "1" : "2";
         },
-        data() {
-            return {
-                form: {
-                    email: '',
-                    password: '',
-                    name: '',
-                    remember: true
-                },
-                status: false
-            }
-        },
-        props: {
-            type: String,
-        },
-        methods: {
-            doLogin(type, formName) {
+        set() { }
 
-                let that = this,
-                    url  = that.urlPrefix;
-                if (type === 'ldap') {
-                    url = `${url}/ldaplogin`;
-                } else {
-                    url = `${url}/namelogin`;
-                }
+      },
+      showLdap: function () {
+        return this.type === 'ldap' || this.type === 'mix';
+      },
+      showUsername: function () {
+        return this.type === 'db' || this.type === 'mix';
+      },
+      urlPrefix: function () {
+        return window.config.dashboard_url_prefix;
+      }
+    },
+    data() {
+      return {
+        form: {
+          email: '',
+          password: '',
+          name: '',
+          remember: true
+        },
+        status: false
+      }
+    },
+    props: {
+      type: String,
+    },
+    methods: {
+      doLogin(type, formName) {
 
-                that.$http.post(url, that.form).then(function (response) {
-                    window.location.reload(true);
-                }).catch(response => {
-                    const errors = response.response.data.errors;
-                    console.log(errors);
-                    const form = that.$refs[formName];
-                    form.fields.forEach(function (field) {
-                        Object.keys(errors).forEach(function (e) {
-                            if (field.prop === e) {
-                                field.validateState = 'error';
-                                field.validateMessage = errors[e].join('<br>');
-                            }
-                        });
-                    });
-                });
-            }
+        let that = this,
+            url  = that.urlPrefix;
+        if (type === 'ldap') {
+          url = `${url}/ldaplogin`;
+        } else {
+          url = `${url}/namelogin`;
         }
+
+        that.$http.post(url, that.form).then(function (response) {
+          window.location.reload(true);
+        }).catch(response => {
+          if (response.response.data.message === undefined) {
+            const errors = response.response.data.errors;
+            const form = that.$refs[formName];
+            form.fields.forEach(function (field) {
+              Object.keys(errors).forEach(function (e) {
+                if (field.prop === e) {
+                  field.validateState = 'error';
+                  field.validateMessage = errors[e].join('<br>');
+                }
+              });
+            });
+          } else {
+            that.status = '用户名或密码错误，请重新输入';
+          }
+
+        });
+      }
     }
+  }
 </script>

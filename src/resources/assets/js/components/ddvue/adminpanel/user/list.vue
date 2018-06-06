@@ -16,7 +16,7 @@
             <el-table-column prop="department.title" label="单位" width="200"></el-table-column>
             <el-table-column label="角色">
                 <template slot-scope="scope">
-                    <el-tag v-for="(p,i) in scope.row.roles" :key="i" style="margin-left:5px;">{{ p.name }}</el-tag>
+                    <el-tag v-for="(p,i) in scope.row.roles" :key="i" disable-transitions style="margin-left:5px;">{{ p.name }}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column prop="updated_at" label="更新时间" width="180"></el-table-column>

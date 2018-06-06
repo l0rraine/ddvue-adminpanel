@@ -23,7 +23,7 @@ class DepartmentController extends CrudController
         $this->crud->setModel(config('ddvue.adminpanel.page_settings.department.model'));
         $this->crud->setPermissionName('编辑 单位');
 
-        $this->crud->addQueryParam('', ['title', 'pinyin', 'center_code'], ['value' => 'title']);
+        $this->crud->addQueryParam('', ['title', 'pinyin'], ['value' => 'title']);
         parent::setup();
 
     }
@@ -36,6 +36,7 @@ class DepartmentController extends CrudController
 
     public function indexJson()
     {
+        $this->data =  $this->crud->model->getAllByParentId(0);
 
         return parent::makeIndexJson();
     }

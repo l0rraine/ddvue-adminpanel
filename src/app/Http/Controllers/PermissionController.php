@@ -44,7 +44,6 @@ class PermissionController extends CrudController
 
     public function indexJson()
     {
-        $this->data = $this->crud->model->get();
 
         return parent::makeIndexJson(true);
     }
