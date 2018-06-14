@@ -1,5 +1,8 @@
 <template>
-
+<div>
+    <el-menu-item :index="submenu.index" v-if="submenu.type=='item'">
+        <i :class="submenu.icon"></i><span slot="title">{{submenu.title}}</span>
+    </el-menu-item>
     <el-submenu :index="submenu.index+''" v-if="submenu.type=='submenu'">
         <template slot="title">
             <i :class="submenu.icon"></i>
@@ -19,10 +22,8 @@
             </template>
 
         </template>
-
-
     </el-submenu>
-
+</div>
 </template>
 <script>
     export default {

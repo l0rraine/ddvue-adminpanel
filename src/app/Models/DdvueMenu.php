@@ -91,14 +91,18 @@ class DdvueMenu extends BaseClassifiedModel
 
         $user = Auth::user();
         $menu = collect();
-        foreach ($this->get() as $m) {
+        $datas  = $this->getAllByParentId($pid, $show_root);
+        foreach ( $datas as $m) {
             $limits = $m['limits'] ?? [];
             if ((count($limits) == 0 || $user->hasAnyPermission($limits))) {  //&& $m['type'] == 'item'
                 $menu->push($m);
             }
         }
+        if ($pid == 0 && $show_root) {
+            $pid = -1;
+        }
 
-        $menu = $this->buildTree($this->get()->toArray(), 0, $menu);
+        $menu = $this->buildTree($menu, $pid);
 
         return $menu;
 
@@ -106,21 +110,18 @@ class DdvueMenu extends BaseClassifiedModel
     }
 
 
-    private function buildTree(array $elements, $parentId = 0, Collection $menus)
+    private function buildTree(Collection $elements, $parentId = 0)
     {
         $branch = [];
+
         foreach ($elements as $element) {
-            $element = $this->extraActionWhenRecurse($element);
-            if ($element['parent_id'] == $parentId) {
-                $c = $menus->pluck('class_list')->search(function ($item) use ($element) {
-                    return strpos($item, $element['class_list']) === 0;
-                });
-                if (!is_bool($c)) {
-                    $children            = $this->buildTree($elements, $element['id'], $menus);
+            if($this->extraCondition($element)){
+                $element = $this->extraActionWhenRecurse($element);
+                if ($element['parent_id'] == $parentId) {
+                    $children            = $this->buildTree($elements, $element['id']);
                     $element['children'] = $children;
                     $branch[]            = $element;
                 }
-
             }
 
         }

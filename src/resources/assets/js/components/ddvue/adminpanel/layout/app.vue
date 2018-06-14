@@ -10,7 +10,7 @@
             <el-container>
                 <el-main>
                     <div id="main">
-                        <ddv-welcome></ddv-welcome>
+                        <!--<ddv-welcome></ddv-welcome>-->
                     </div>
 
                 </el-main>
@@ -36,6 +36,9 @@
         },
         created() {
             this.getSettings();
+        },
+        mounted() {
+            this.sendTo('main', `${window.config.dashboard_url_prefix}/welcome`);
         },
         methods: {
             getSettings() {
