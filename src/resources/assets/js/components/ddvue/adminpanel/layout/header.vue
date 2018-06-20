@@ -12,7 +12,7 @@
 
         <div class="navbar-header pull-left">
             <span class="navbar-brand">
-                {{ title }}
+                <a @click="gotoWelcome" href="javascript:;" style="text-decoration: none;color:white;">{{ title }}</a>
             </span>
 
         </div>
@@ -82,6 +82,10 @@
                     that.insertEl(that, that.changePwdUrl);
                 }
 
+            },
+            gotoWelcome() {
+                const link = `${window.config.dashboard_url_prefix}/welcome`;
+                this.reloadMain(link);
             }
         }
     }

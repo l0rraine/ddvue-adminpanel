@@ -23,8 +23,7 @@ export const BaseForm = {
             type: String,
             default: '新增'
         },
-        formData: Object,
-        postUrl: String
+        formData: Object
     },
     created() {
         if (this.formData !== undefined) {
@@ -41,10 +40,16 @@ export const BaseForm = {
                 if (valid) {
                     that.$http.post(url, that.form)
                         .then(function (response) {
+                            console.log(response)
+                            that.$message({
+                                type: 'success',
+                                duration: 4000,
+                                message: response.data.message || (that.model.id ? '修改' : '添加') + '成功'
+                            });
                             that.doPostCallback(that);
                         })
                         .catch(function (e) {
-                            if (e.response) {
+                            if (e.response.data.errors) {
                                 const errors = e.response.data.errors;
                                 const form = that.$refs[formName];
                                 form.fields.forEach(function (field) {
@@ -55,8 +60,13 @@ export const BaseForm = {
                                         }
                                     });
                                 });
-                            } else {
-                                console.log('component error:' + e);
+                            }
+                            if (e.response.data.exception) {
+                                that.$message({
+                                    type: 'error',
+                                    duration: 4000,
+                                    message: e.response.data.message
+                                });
                             }
 
 
@@ -67,9 +77,10 @@ export const BaseForm = {
 
         },
         doPostCallback(that) {
+            console.log('posted');
             that.show = false;
             // that.reloadMain();
-            that.$eventHub.$emit('afterCrudFormPost', that.form, that.isEdit);
+            that.$eventHub.$emit('afterCrudFormPost');
         }
     }
 }

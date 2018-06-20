@@ -10,7 +10,7 @@
                 <el-form-item label="密码" prop="password">
                     <el-input type="password"
                               v-model="form.password"
-                              @keyup.enter="doLogin('ldap','ldapLoginForm')">
+                              @keyup.enter.native="doLogin('ldap','ldapLoginForm')">
                     </el-input>
                 </el-form-item>
                 <el-row>

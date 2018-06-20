@@ -1,6 +1,6 @@
 <template>
     <el-container direction="vertical">
-        <ddv-breadcrumbs @onItemClick="handleBreadcrumbsClick" :config="breadcrumbData"></ddv-breadcrumbs>
+        <ddv-breadcrumbs v-if="showBreadcrumb" @onItemClick="handleBreadcrumbsClick" :config="breadcrumbData"></ddv-breadcrumbs>
         <slot name="content"></slot>
     </el-container>
 </template>
@@ -8,13 +8,19 @@
     export default {
         name: 'DdvMain',
         props: {
-            breadcrumbData: Object,
+            breadcrumbData: {
+                type: Object
+            },
+            showBreadcrumb: {
+                type: Boolean,
+                default: true
+            }
         },
         methods: {
             handleBreadcrumbsClick(url) {
                 const that = this;
                 that.$el.innerHTML = '';
-                that.insertEl(that,url);
+                that.insertEl(that, url);
             }
         }
     }
