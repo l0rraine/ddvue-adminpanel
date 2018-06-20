@@ -40,7 +40,6 @@ export const BaseForm = {
                 if (valid) {
                     that.$http.post(url, that.form)
                         .then(function (response) {
-                            console.log(response)
                             that.$message({
                                 type: 'success',
                                 duration: 4000,
@@ -77,7 +76,6 @@ export const BaseForm = {
 
         },
         doPostCallback(that) {
-            console.log('posted');
             that.show = false;
             // that.reloadMain();
             that.$eventHub.$emit('afterCrudFormPost');

@@ -32,7 +32,8 @@ export const BaseList = {
         },
     },
     mounted() {
-        this.$eventHub.$on('afterCrudFormPost', this.afterFormPost);
+        this.$eventHub.$off('afterCrudFormPost');
+        this.$eventHub.$once('afterCrudFormPost', this.afterFormPost);
     },
     methods: {
         dateFormatter(row, column, cellValue) {
@@ -77,7 +78,7 @@ export const BaseList = {
         afterFormPost() {
             this.$eventHub.$off('afterCrudFormPost');
             this.$eventHub.$emit(this.tableEventName);
-            this.$eventHub.$on('afterCrudFormPost', this.afterFormPost);
+            this.$eventHub.$once('afterCrudFormPost', this.afterFormPost);
         }
     }
 }
