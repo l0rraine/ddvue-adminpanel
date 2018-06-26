@@ -28,6 +28,8 @@ Vue.mixin({
                 document.getElementById(id).innerHTML = '';
                 document.getElementById(id).appendChild(component.$el);
                 callback();
+            }).catch(function (e) {
+                that.halderError(e);
             });
         },
         insertEl(that, url) {
@@ -39,7 +41,14 @@ Vue.mixin({
                 });
                 let component = new MyComponent().$mount();
                 that.$el.appendChild(component.$el);
+            }).catch(function (e) {
+                that.halderError(e);
             });
+        },
+        halderError(e) {
+            if (e.response.status === 403) {
+                window.location.reload(true);
+            }
         },
         reloadMain(url = '', callback = function () {}) {
             url = url || this.getMainUrl();

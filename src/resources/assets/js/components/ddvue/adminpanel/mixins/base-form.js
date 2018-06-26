@@ -23,7 +23,13 @@ export const BaseForm = {
             type: String,
             default: '新增'
         },
-        formData: Object
+        formData: {
+            type: Object
+        },
+        postUrl: {
+            type: String,
+            default: ''
+        }
     },
     created() {
         if (this.formData !== undefined) {
