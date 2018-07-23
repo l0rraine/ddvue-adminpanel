@@ -35,7 +35,7 @@
             <el-table-column prop="index" label="路径名" width="300"></el-table-column>
             <el-table-column prop="type" label="类型" width="180"></el-table-column>
             <el-table-column prop="sort_id" label="排序" width="180"></el-table-column>
-            <el-table-column label="所有者" width="180">
+            <el-table-column label="能访问的权限" width="180">
                 <template slot-scope="scope">
                     <el-tag v-for="(p,i) in scope.row.limits" :key="i" disable-transitions style="margin-left:5px;">{{ getPermission(p) }}
                     </el-tag>

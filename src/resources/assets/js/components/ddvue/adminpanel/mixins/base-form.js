@@ -37,11 +37,11 @@ export const BaseForm = {
         }
     },
     methods: {
-        onSubmit(formName) {
+        onSubmit(formName, url = '') {
             const that = this;
             let p = '/add';
             if (that.model.id) p = '/edit';
-            const url = that.postUrl || that.getMainUrl() + p;
+            url = url || that.postUrl || that.getMainUrl() + p;
             that.$refs[formName].validate((valid) => {
                 if (valid) {
                     that.$http.post(url, that.form)

@@ -14,40 +14,67 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
 
+
+import VueBus from 'vue-bus';
+
+Vue.use(VueBus);
+
 Vue.prototype.$http = axios;
+
+Vue.prototype.$eventHub = Vue.prototype.$eventHub || new Vue();
 
 Vue.mixin({
     methods: {
         sendTo(id, url, callback = function () {}) {
-            this.$http.get(url).then(function (response) {
+            const that = this;
+            that.$http.get(url).then(function (response) {
                 const v = response.data;
-                let MyComponent = Vue.extend({
+                const MyComponent = Vue.extend({
                     template: v
                 });
-                let component = new MyComponent().$mount();
+                const component = new MyComponent().$mount();
                 document.getElementById(id).innerHTML = '';
                 document.getElementById(id).appendChild(component.$el);
+                // const el = that.$refs[id].$el;
+                // el.replaceChild(component.$el,el.childNodes[0]);
                 callback();
             }).catch(function (e) {
-                that.halderError(e);
+                that.handleError(e);
             });
         },
-        insertEl(that, url) {
+        insertEl(that, url, callback = function () {}) {
             if (url === '') return;
             that.$http.get(url).then(function (response) {
                 const v = response.data;
                 let MyComponent = Vue.extend({
                     template: v
                 });
-                let component = new MyComponent().$mount();
+                const component = new MyComponent().$mount();
+                callback(component);
                 that.$el.appendChild(component.$el);
+
             }).catch(function (e) {
-                that.halderError(e);
+                that.handleError(e);
             });
         },
-        halderError(e) {
-            if (e.response.status === 403) {
-                window.location.reload(true);
+        handleError(e) {
+            let message = '';
+            switch (e.response.status) {
+                case 403:
+                    window.location.reload(true);
+                    break;
+                case 404:
+                    message = '访问出错：未知的链接';
+                case 401:
+                    message = '访问出错：未授权的链接';
+                default:
+                    this.$message({
+                        type: 'error',
+                        duration: 4000,
+                        message: message || e.message
+                    });
+                    break;
+
             }
         },
         reloadMain(url = '', callback = function () {}) {
@@ -86,10 +113,25 @@ import DdvChangePassword from './components/ddvue/adminpanel/auth/change-passwor
 
 Vue.component(DdvChangePassword.name, DdvChangePassword);
 
+
+/**************************  partials  **************************/
+import DdvPartialsDropDownTwoColumns from './components/ddvue/adminpanel/partials/dropdown-two-columns';
+
+Vue.component(DdvPartialsDropDownTwoColumns.name, DdvPartialsDropDownTwoColumns);
+
+import DdvPartialsDropDownTwoRows from './components/ddvue/adminpanel/partials/dropdown-two-rows.vue';
+
+Vue.component(DdvPartialsDropDownTwoRows.name, DdvPartialsDropDownTwoRows);
+
+
 /****************************  layout  ************************/
 import DdvApp from './components/ddvue/adminpanel/layout/app.vue';
 
 Vue.component(DdvApp.name, DdvApp);
+
+import DdvMainContainer from './components/ddvue/adminpanel/layout/main-container.vue';
+
+Vue.component(DdvMainContainer.name, DdvMainContainer);
 
 import DdvHeader from './components/ddvue/adminpanel/layout/header.vue';
 
@@ -161,6 +203,16 @@ import DdvRoleEdit from './components/ddvue/adminpanel/role/edit.vue';
 Vue.component(DdvRoleEdit.name, DdvRoleEdit);
 
 
+/**************************  权限管理  **************************/
+import DdvPermissionList from './components/ddvue/adminpanel/permission/list.vue';
+
+Vue.component(DdvPermissionList.name, DdvPermissionList);
+
+import DdvPermissionEdit from './components/ddvue/adminpanel/permission/edit.vue';
+
+Vue.component(DdvPermissionEdit.name, DdvPermissionEdit);
+
+
 /**************************  数据导入  **************************/
 import DdvImporter from './components/ddvue/adminpanel/importer/main.vue';
 
@@ -180,5 +232,7 @@ Vue.component(DdvImporterCorrectColumn.name, DdvImporterCorrectColumn);
 import DdvImporterPreview from './components/ddvue/adminpanel/importer/preview.vue';
 
 Vue.component(DdvImporterPreview.name, DdvImporterPreview);
+
+
 
 
