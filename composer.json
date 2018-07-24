@@ -20,5 +20,13 @@
         "psr-4": {
             "DDVue\\AdminPanel\\": "src"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DDVue\\AdminPanel\\AdminPanelServiceProvider"
+            ]
+        }
     }
+
 }
