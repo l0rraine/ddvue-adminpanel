@@ -3,6 +3,7 @@
                :visible.sync="show"
                :close-on-click-modal="false"
                :close-on-press-escape="false"
+               @close="handleClose"
                width="50%">
         <!--<el-steps :active="active" finish-status="success">-->
         <!--<el-step title="上传"></el-step>-->
@@ -13,8 +14,13 @@
                        class="upload"
                        drag
                        :headers="{'X-CSRF-TOKEN': csrfToken}"
-                       accept=".xls;.xlsx"
-                       :show-file-list="false"
+                       accept=".xls,.xlsx"
+                       :data="extraData"
+                       :on-error="handleError"
+                       :on-progress="handleProgress"
+                       :on-change="handleChange"
+                       :http-request="handleUpload"
+                       :show-file-list="true"
                        :action='postUrl'>
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em>
@@ -44,7 +50,8 @@
                 show: true,
                 active: 0,
                 excelData: [],
-                csrfToken: $('meta[name="csrf-token"]').attr('content')
+                csrfToken: $('meta[name="csrf-token"]').attr('content'),
+                fileUploadFormData: new FormData(),
             }
         },
         computed: {
@@ -70,6 +77,9 @@
             },
             postUrl: {
                 type: String
+            },
+            extraData: {
+                type: Object
             }
 
 
@@ -81,8 +91,39 @@
             handleSuccess: function () {
 
             },
-            beforeUpload: function () {
+            handleError(err, file, fileList) {
+                console.log(err);
 
+            },
+            handleProgress(event, file, fileList) {
+                const that = this;
+                if (event.total == event.loaded) {
+
+                }
+            },
+            handleChange(file, fileList) {
+                console.log(file, fileList);
+                this.fileUploadFormData.append('file', file.raw);
+            },
+            async handleUpload() {
+                const that = this;
+
+                that.$http.post(that.postUrl, that.fileUploadFormData);
+
+                that.loop = true;
+                do {
+                    that.$http.get(`${window.config.dashboard_url_prefix}/excel/progress`).then(function (response) {
+                        console.log(data);
+
+                    })
+                    await sleep(1000);
+                } while (that.loop);
+            },
+            sleep(d) {
+                return new Promise((resolve) => setTimeout(resolve, d))
+            },
+            handleClose() {
+                this.loop = false;
             },
             next() {
                 if (this.active++ > 1) this.active = 1;
