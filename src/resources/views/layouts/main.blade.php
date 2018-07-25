@@ -45,7 +45,11 @@
 
 <script src="{{ mix('js/manifest.js') }}"></script>
 <script src="{{ mix('js/vendor.js') }}"></script>
-<script src="{{ mix('js/app.min.js') }}"></script>
+
+<script src="{{ mix('js/adminpanel.js') }}"></script>
+<script src="{{ mix('js/crud.js') }}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
+
 <script>
     function doResize(){
         var h = $(window).height()-16,
