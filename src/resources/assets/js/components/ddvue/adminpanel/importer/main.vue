@@ -96,28 +96,31 @@
 
             },
             handleProgress(event, file, fileList) {
-                const that = this;
-                if (event.total == event.loaded) {
-
-                }
             },
-            handleChange(file, fileList) {
-                console.log(file, fileList);
+            async handleChange(file, fileList) {
                 this.fileUploadFormData.append('file', file.raw);
-            },
-            async handleUpload() {
                 const that = this;
-
-                that.$http.post(that.postUrl, that.fileUploadFormData);
-
                 that.loop = true;
                 do {
                     that.$http.get(`${window.config.dashboard_url_prefix}/excel/progress`).then(function (response) {
-                        console.log(data);
+                        console.log(response);
 
                     })
-                    await sleep(1000);
+                    await that.sleep(1000);
                 } while (that.loop);
+            },
+            handleUpload() {
+                const that = this;
+
+                that.$http.post(that.postUrl, that.fileUploadFormData)
+                    .then(function (response) {
+
+                    })
+                    .catch(function (e) {
+                        that.$message(e.response.data.message);
+                    });
+
+
             },
             sleep(d) {
                 return new Promise((resolve) => setTimeout(resolve, d))
