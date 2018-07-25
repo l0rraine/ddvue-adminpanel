@@ -13,12 +13,19 @@
         "adldap2/adldap2": "^8.0",
         "adldap2/adldap2-laravel": "^4.0",
         "spatie/laravel-permission": "^2.9",
-        "ddvue/crud": "dev-master",
-        "ddvue/depcrud": "dev-master"
+        "ddvue/crud": "dev-master"
     },
     "autoload": {
         "psr-4": {
             "DDVue\\AdminPanel\\": "src"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DDVue\\AdminPanel\\AdminPanelServiceProvider"
+            ]
+        }
     }
+
 }
