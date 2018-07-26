@@ -20,7 +20,7 @@
                        :on-progress="handleProgress"
                        :on-change="handleChange"
                        :http-request="handleUpload"
-                       :show-file-list="true"
+                       :show-file-list="false"
                        :action='postUrl'>
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em>
@@ -42,6 +42,7 @@
 
 </template>
 <script>
+    import {Loading} from 'element-ui';
 
     export default {
         name: 'DdvImporter',
@@ -57,9 +58,9 @@
         computed: {
             uploadStyle: function () {
                 if (this.active === 0) {
-                    return {display: 'block'};
+                    return {width: '100%', display: 'block'};
                 } else {
-                    return {display: 'none'};
+                    return {width: '100%', display: 'none'};
                 }
             },
             previewStyle: function () {
@@ -97,33 +98,29 @@
             },
             handleProgress(event, file, fileList) {
             },
-            async handleChange(file, fileList) {
+            handleChange(file, fileList) {
                 this.fileUploadFormData.append('file', file.raw);
-                const that = this;
-                that.loop = true;
-                do {
-                    that.$http.get(`${window.config.dashboard_url_prefix}/excel/progress`).then(function (response) {
-                        console.log(response);
 
-                    })
-                    await that.sleep(1000);
-                } while (that.loop);
             },
             handleUpload() {
                 const that = this;
-
+                let loadingInstance = Loading.service({fullscreen: true});
                 that.$http.post(that.postUrl, that.fileUploadFormData)
                     .then(function (response) {
-
+                        loadingInstance.close();
+                        that.show = false;
+                        // that.reloadMain();
+                        that.$message({
+                            message: response.message,
+                            type: 'success'
+                        });
+                        that.$eventHub.$emit('afterCrudFormPost');
                     })
                     .catch(function (e) {
-                        that.$message(e.response.data.message);
+                        loadingInstance.close();
+                        that.$alert(e.response.data.message, '导入数据错误');
                     });
 
-
-            },
-            sleep(d) {
-                return new Promise((resolve) => setTimeout(resolve, d))
             },
             handleClose() {
                 this.loop = false;
@@ -140,3 +137,12 @@
         }
     }
 </script>
+<style>
+    .el-upload {
+        width: 100%;
+    }
+
+    .el-upload-dragger {
+        width: 100%;
+    }
+</style>

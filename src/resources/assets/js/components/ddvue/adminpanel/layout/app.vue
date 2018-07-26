@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-header style="background-color: rgb(64, 158, 255);margin:0 20px;" height="45px">
+        <el-header style="background-color: rgb(64, 158, 255);margin:0 20px;" height="56px">
             <ddv-header :title="title" :username="username"></ddv-header>
         </el-header>
         <el-container style="padding:0 20px;">

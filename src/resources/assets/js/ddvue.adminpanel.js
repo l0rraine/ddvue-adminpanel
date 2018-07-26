@@ -233,6 +233,10 @@ import DdvImporterPreview from './components/ddvue/adminpanel/importer/preview.v
 
 Vue.component(DdvImporterPreview.name, DdvImporterPreview);
 
+import DdvImporterProgress from './components/ddvue/adminpanel/importer/progress.vue';
+
+Vue.component(DdvImporterProgress.name, DdvImporterProgress);
+
 
 
 
