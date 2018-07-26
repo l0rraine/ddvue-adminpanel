@@ -1,5 +1,5 @@
 <template>
-    <el-row type="flex" class="row-bg" justify="space-between" style="border-bottom: 1px solid #E5E5E5;">
+    <el-row type="flex" class="row-bg" justify="space-between" style="border-bottom: 1px solid #E5E5E5;margin-top:15px;">
         <el-col :xs="22" :sm="18" :md="10" :lg="12" :xl="12">
             <h4>{{ config.title }}
                 <small>{{ config.subtitle }}</small>
