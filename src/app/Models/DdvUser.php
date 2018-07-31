@@ -6,10 +6,8 @@ use DDVue\Crud\ModelTraits\BaseModelTrait;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Spatie\Permission\Exceptions\GuardDoesNotMatch;
 use Spatie\Permission\Traits\HasRoles;
 
 class DdvUser extends Authenticatable
