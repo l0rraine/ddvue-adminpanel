@@ -127,7 +127,8 @@ class AdminPanelServiceProvider extends ServiceProvider
                 CrudRoute::make('user', $controller, 'Ddvue.AdminPanel.user');
 
                 //单位管理
-                CrudRoute::make('department', config('ddvue.adminpanel.page_settings.department.controller'), 'Ddvue.AdminPanel.department');
+                if (config('ddvue.adminpanel.page_settings.department.enabled'))
+                    CrudRoute::make('department', config('ddvue.adminpanel.page_settings.department.controller'), 'Ddvue.AdminPanel.department');
 
                 //角色管理
                 CrudRoute::make('role', config('ddvue.adminpanel.page_settings.role.controller'), 'Ddvue.AdminPanel.role');

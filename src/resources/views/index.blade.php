@@ -52,7 +52,7 @@
 <script src="{{ mix('js/app.js') }}"></script>
 <script>
     function doResize(){
-        var h = $(window).height()-16,
+        var h = $(window).height()-40,
             headerHeight = $('header').height(),
             footerHeight = $('footer').height();
 
