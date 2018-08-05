@@ -2,16 +2,38 @@
 
 return [
     'dashboard_name' => '请输入后台标题',
-    'title' => 'Title',
-    'footer_copyright' => 'copyright',
-    'url_prefix' => '/admin',
-    'use_in_iframe' => true,
-    'iframe_id' => 'iframe',
-    'left_side_bar_include_file' => 'adminpanel::layouts.left_sidebar',
+    'url_prefix'     => '/admin',
 
-    'auth' => [
+    'auth'          => [
         'admin_auth_middleware' => 'admin.auth:ddvue_ldap,ddvue_db',//['admin.auth:admin'],
-        'user_model'=> \App\Models\User::class,
-        'type'=> 'mix', //ldap, db or mix
+        'user_model'            => \DDVue\AdminPanel\app\Models\DdvUser::class,
+        'type'                  => 'ldap', //ldap, db or mix
+    ],
+    'page_settings' => [
+        'user' => [
+            'enabled'    => true,
+            'controller' => \DDVue\AdminPanel\app\Http\Controllers\UserController::class,
+            'model'      => \DDVue\AdminPanel\app\Models\DdvUser::class,
+            'view'       => 'ddvue.adminpanel::pages.user'
+        ],
+        'role' => [
+            'enabled'    => true,
+            'controller' => \DDVue\AdminPanel\app\Http\Controllers\RoleController::class,
+            'model'      => \DDVue\AdminPanel\app\Models\DdvRole::class,
+            'view'       => 'ddvue.adminpanel::pages.role'
+        ],
+        'permission' => [
+            'enabled'    => true,
+            'controller' => \DDVue\AdminPanel\app\Http\Controllers\PermissionController::class,
+            'model'      => \DDVue\AdminPanel\app\Models\DdvPermission::class,
+            'view'       => 'ddvue.adminpanel::pages.permission'
+        ],
+        'department' => [
+            'enabled'    => true,
+            'controller' => \DDVue\AdminPanel\app\Http\Controllers\DepartmentController::class,
+            'model'      => \DDVue\AdminPanel\app\Models\DdvDepartment::class,
+            'view'       => 'ddvue.adminpanel::pages.department'
+        ]
     ]
+
 ];
