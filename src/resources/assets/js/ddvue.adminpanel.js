@@ -6,8 +6,8 @@
 
 require('./bootstrap');
 
-
 window.Vue = require('vue');
+
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -58,20 +58,15 @@ Vue.mixin({
             });
         },
         handleError(e) {
-            let message = '';
             switch (e.response.status) {
                 case 403:
                     window.location.reload(true);
                     break;
-                case 404:
-                    message = '访问出错：未知的链接';
-                case 401:
-                    message = '访问出错：未授权的链接';
                 default:
                     this.$message({
                         type: 'error',
                         duration: 4000,
-                        message: message || e.message
+                        message: e.message
                     });
                     break;
 
@@ -236,7 +231,5 @@ Vue.component(DdvImporterPreview.name, DdvImporterPreview);
 import DdvImporterProgress from './components/ddvue/adminpanel/importer/progress.vue';
 
 Vue.component(DdvImporterProgress.name, DdvImporterProgress);
-
-
 
 
