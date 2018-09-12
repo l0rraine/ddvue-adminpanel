@@ -51,18 +51,20 @@
 <script src="{{ mix('js/crud.js') }}"></script>
 <script src="{{ mix('js/app.js') }}"></script>
 <script>
-    function doResize(){
-        var h = $(window).height()-40,
+    function doResize() {
+        var h            = $(window).height() - 25,
             headerHeight = $('header').height(),
             footerHeight = $('footer').height();
 
-        $('aside').height(h-headerHeight);
-        $('#main').height(h-headerHeight-footerHeight);
+        $('aside').height(h - headerHeight);
+        $('#main').height(h - headerHeight - footerHeight);
+        window.config.main_height = $('#main').height();
     }
-    $(document).ready(function(){
+
+    $(document).ready(function () {
         doResize();
     });
-    $(window).resize(function(){
+    $(window).resize(function () {
         doResize();
     });
 </script>

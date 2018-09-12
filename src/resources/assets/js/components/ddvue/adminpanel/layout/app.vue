@@ -14,8 +14,8 @@
                     </div>
 
                 </el-main>
-                <el-footer>
-                    <span>© 2018 勘探开发研究院计算机室<br>电话:8715872</span>
+                <el-footer height="15px ">
+                    © 2018 勘探开发研究院计算机室   电话:8715872
                 </el-footer>
             </el-container>
         </el-container>
@@ -71,11 +71,6 @@
 
     .el-footer {
         text-align: center;
-        height: 30px !important;
-    }
-
-    .el-footer span {
-        /*line-height:60px;*/
         font-size: 65%;
         color: #8c8b8b;
     }
