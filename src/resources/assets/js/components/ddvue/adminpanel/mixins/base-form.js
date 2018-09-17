@@ -1,7 +1,8 @@
 export const BaseForm = {
     data() {
         return {
-            show: true
+            show: true,
+            csrfToken: $('meta[name="csrf-token"]').attr('content'),
         }
     },
     computed: {
