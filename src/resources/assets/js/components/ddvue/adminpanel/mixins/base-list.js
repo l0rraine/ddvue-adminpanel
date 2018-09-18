@@ -75,9 +75,9 @@ export const BaseList = {
             this.insertEl(this, url);
 
         },
-        afterFormPost() {
+        afterFormPost(p) {
             this.$eventHub.$off('afterCrudFormPost');
-            this.$eventHub.$emit(this.tableEventName);
+            this.$eventHub.$emit(this.tableEventName,p);
             this.$eventHub.$once('afterCrudFormPost', this.afterFormPost);
         }
     }
