@@ -74,6 +74,9 @@ export const BaseForm = {
                                     message: e.response.data.message
                                 });
                             }
+                            if(e.response.exception){
+                                console.log(e)
+                            }
 
 
                         });
