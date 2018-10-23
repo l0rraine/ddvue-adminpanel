@@ -33,6 +33,11 @@ class DdvRole extends Role
         );
     }
 
+    protected function ensureModelSharesGuard($roleOrPermission)
+    {
+        return true;
+    }
+
 //    public static function findByName(string $name, $guardName = null): RoleContract
 //    {
 //        $guardName = $guardName ?? Guard::getDefaultName(static::class);
