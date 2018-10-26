@@ -49,6 +49,11 @@ export const BaseList = {
                 url  = `${that.getMainUrl()}/add`;
             that.insertEl(that, url);
         },
+        handleFilter(value, row, column) {
+            // const property = column['property'];
+            // return row[property] === value;
+            return true;
+        },
         handleDelete: function (selections) {
             const that = this,
                   url  = `${that.getMainUrl()}/del`;
@@ -77,7 +82,7 @@ export const BaseList = {
         },
         afterFormPost(p) {
             this.$eventHub.$off('afterCrudFormPost');
-            this.$eventHub.$emit(this.tableEventName,p);
+            this.$eventHub.$emit(this.tableEventName, p);
             this.$eventHub.$once('afterCrudFormPost', this.afterFormPost);
         }
     }
