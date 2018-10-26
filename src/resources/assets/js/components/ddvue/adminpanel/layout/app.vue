@@ -15,7 +15,7 @@
 
                 </el-main>
                 <el-footer height="15px ">
-                    © 2018 勘探开发研究院计算机室   电话:8715872
+                    © 2018 勘探开发研究院计算机室
                 </el-footer>
             </el-container>
         </el-container>
