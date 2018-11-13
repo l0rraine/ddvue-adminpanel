@@ -127,7 +127,7 @@ return [
                 |
                 */
 
-                'domain_controllers' => explode(' ', env('ADLDAP_CONTROLLERS', '10.66.2.18')),
+                'domain_controllers' => explode(' ', env('ADLDAP_CONTROLLERS', 'ad.slof.com sinopec.ad')),
 
                 /*
                 |--------------------------------------------------------------------------
