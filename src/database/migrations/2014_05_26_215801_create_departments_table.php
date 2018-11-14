@@ -22,6 +22,11 @@ class CreateDepartmentsTable extends Migration
             $table->string('class_layer')->nullable();
             $table->timestamps();
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('dep_id')->nullable()->unsigned()->index();
+            $table->foreign('dep_id')->references('id')->on('departments')->onDelete('cascade');
+        });
     }
 
     /**
@@ -31,6 +36,10 @@ class CreateDepartmentsTable extends Migration
      */
     public function down()
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('users_dep_id_foreign');
+            $table->dropColumn('dep_id');
+        });
         Schema::drop('departments');
     }
 }
