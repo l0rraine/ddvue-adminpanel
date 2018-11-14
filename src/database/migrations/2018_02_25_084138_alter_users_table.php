@@ -16,7 +16,8 @@ class AlterUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('displayname')->nullable();
             if(config('ddvue.adminpanel.auth.type')=='ldap' || config('ddvue.adminpanel.auth.type')=='mix'){
-                $table->string('password')->nullable();
+                $table->string('name')->nullable()->change();
+                $table->string('password')->nullable()->change();
             }else{
                 $table->unique('name');
             }
@@ -33,7 +34,10 @@ class AlterUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('displayname');
-            $table->dropUnique('users_name_unique');
+            if(config('ddvue.adminpanel.auth.type')=='db'){
+                $table->dropUnique('users_name_unique');
+            }
+
         });
     }
 }
