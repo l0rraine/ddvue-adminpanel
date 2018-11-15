@@ -39,15 +39,16 @@ class CustomDatabaseUserProvider extends DatabaseUserProvider
      */
     public function __construct()
     {
-        $model = array_get(app('config'),'auth.providers.ldap.model');
-        parent::__construct(app('hash'),$model);
+        $model = array_get(app('config'), 'auth.providers.ldap.model');
+        parent::__construct(app('hash'), $model);
     }
+
     /**
      * {@inheritdoc}
      */
     public function retrieveByCredentials(array $credentials)
     {
-        $username = $credentials[Resolver::getEloquentUsernameAttribute()];
+        $username = $credentials[ Resolver::getEloquentUsernameAttribute() ];
         //app('adldap')->connect(null, $username, $credentials['password']);
 
         app('adldap')->connect(null, $username, $credentials['password']);
@@ -93,7 +94,9 @@ class CustomDatabaseUserProvider extends DatabaseUserProvider
                     Bus::dispatch(new SyncPassword($model, $credentials));
 
                     // 去掉 -胜利油田
-                    $model->displayname = explode('-', $this->user->displayname[0])[0];
+                    $model->displayname = '';
+                    if (is_array($this->user->displayname) && !isEmpty($this->user->displayname[0]))
+                        $model->displayname = explode('-', $this->user->displayname[0])[0];
 
                     $model->save();
 
@@ -141,7 +144,7 @@ class CustomDatabaseUserProvider extends DatabaseUserProvider
 
         Event::fire(new Authenticating($user, $username));
 
-        if (\Adldap::getProvider('default')->auth()->attempt($username, $password,$bindAsUser = true)) {
+        if (\Adldap::getProvider('default')->auth()->attempt($username, $password, $bindAsUser = true)) {
             Event::fire(new Authenticated($user));
 
             return true;
@@ -152,9 +155,9 @@ class CustomDatabaseUserProvider extends DatabaseUserProvider
         return false;
     }
 
-    private function getLdapAuthAttribute() : string
+    private function getLdapAuthAttribute(): string
     {
-        return  Config::get('adldap_auth.usernames.ldap.authenticate', 'distinguishedname');
+        return Config::get('adldap_auth.usernames.ldap.authenticate', 'distinguishedname');
     }
 
     private function getPasswordFromCredentials($credentials)
