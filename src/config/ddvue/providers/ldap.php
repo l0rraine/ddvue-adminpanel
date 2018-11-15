@@ -7,5 +7,5 @@
  */
 return [
     'driver' => 'adldap',
-    'model'  => app('config')['ddvue.adminpanel.auth.user_model'],
+    'model'  => \DDVue\AdminPanel\app\Models\DdvLdapUser::class
 ];

@@ -24,7 +24,7 @@ class CreateDepartmentsTable extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('dep_id')->nullable()->unsigned()->index();
+            $table->integer('dep_id')->after('password')->nullable()->unsigned()->index();
             $table->foreign('dep_id')->references('id')->on('departments')->onDelete('cascade');
         });
     }

@@ -14,7 +14,7 @@ class AlterUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('displayname')->nullable();
+            $table->string('displayname')->after('name')->nullable();
             if(config('ddvue.adminpanel.auth.type')=='ldap' || config('ddvue.adminpanel.auth.type')=='mix'){
                 $table->string('name')->nullable()->change();
                 $table->string('password')->nullable()->change();
