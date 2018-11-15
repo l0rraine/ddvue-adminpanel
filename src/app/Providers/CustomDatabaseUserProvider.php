@@ -95,7 +95,7 @@ class CustomDatabaseUserProvider extends DatabaseUserProvider
 
                     // 去掉 -胜利油田
                     $model->displayname = '';
-                    if (is_array($this->user->displayname) && !isEmpty($this->user->displayname[0]))
+                    if (is_array($this->user->displayname) && !empty($this->user->displayname[0]))
                         $model->displayname = explode('-', $this->user->displayname[0])[0];
 
                     $model->save();
