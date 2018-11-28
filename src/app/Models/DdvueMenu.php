@@ -110,7 +110,7 @@ class DdvueMenu extends BaseClassifiedModel
     }
 
 
-    private function buildTree(Collection $elements, $parentId = 0)
+    protected function buildTree(Collection $elements, $parentId = 0)
     {
         $branch = [];
 

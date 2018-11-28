@@ -7,7 +7,7 @@
                 <ddv-menu-group :group="item"></ddv-menu-group>
             </template>
             <template v-else="item.type=='item'">
-                <el-menu-item :index="item.index">
+                <el-menu-item :index="item.index" style="margin-left:10px; ">
                     <i :class="item.icon"></i><span slot="title">{{item.title}}</span>
                 </el-menu-item>
             </template>

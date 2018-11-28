@@ -3,6 +3,7 @@
 return [
     'dashboard_name' => '后台标题',
     'url_prefix'     => '/admin',
+    'menu_model'     => \DDVue\AdminPanel\app\Models\DdvueMenu::class,
 
     'auth'          => [
         'admin_auth_middleware' => 'admin.auth:ddvue_ldap',//ddvue_ldap,ddvue_db//['admin.auth:admin'],
