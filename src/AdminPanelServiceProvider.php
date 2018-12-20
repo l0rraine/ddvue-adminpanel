@@ -37,23 +37,31 @@ class AdminPanelServiceProvider extends ServiceProvider
 
 
         $this->publishes([
-                             __DIR__ . '/resources/views'       => resource_path('views/vendor/ddvue/adminpanel'),
-                             __DIR__ . '/public'                => public_path('/'),
-                             __DIR__ . '/config/ddvue'          => config_path('ddvue'),
-                             __DIR__ . '/config/adldap'         => config_path('/'),
-                             __DIR__ . '/config/permission.php' => config_path('permission.php'),
-                             __DIR__ . '/database'              => base_path('/database'),
-                             __DIR__ . '/resources/assets/js'   => resource_path('assets/js'),
-                             __DIR__ . '/resources/assets/sass' => resource_path('assets/sass'),
+                             __DIR__ . '/resources/views'        => resource_path('views/vendor/ddvue/adminpanel'),
+                             __DIR__ . '/public'                 => public_path('/'),
+                             __DIR__ . '/config/ddvue'           => config_path('ddvue'),
+                             __DIR__ . '/config/ddvue/guards'    => config_path('ddvue/guards'),
+                             __DIR__ . '/config/ddvue/providers' => config_path('ddvue/providers'),
+                             __DIR__ . '/config/adldap'          => config_path('/'),
+                             __DIR__ . '/config/permission.php'  => config_path('permission.php'),
+                             __DIR__ . '/database'               => base_path('/database'),
+                             __DIR__ . '/resources/assets/js'    => resource_path('assets/js'),
+                             __DIR__ . '/resources/assets/sass'  => resource_path('assets/sass'),
 
                          ], 'ddvue-adminpanel');
 
 
-        $this->mergeConfigFrom(__DIR__ . '/config/ddvue/guards/ddvue_db.php', 'auth.guards.ddvue_db');
-        $this->mergeConfigFrom(__DIR__ . '/config/ddvue/guards/ddvue_ldap.php', 'auth.guards.ddvue_ldap');
+        $this->mergeConfigFrom(__DIR__ . '/config/ddvue/guards/ddvue_db.php', 'ddvue.guards.ddvue_db');
+        $this->mergeConfigFrom(__DIR__ . '/config/ddvue/guards/ddvue_ldap.php', 'ddvue.guards.ddvue_ldap');
 
-        $this->mergeConfigFrom(__DIR__ . '/config/ddvue/providers/db.php', 'auth.providers.db');
-        $this->mergeConfigFrom(__DIR__ . '/config/ddvue/providers/ldap.php', 'auth.providers.ldap');
+        $this->mergeConfigFrom(__DIR__ . '/config/ddvue/providers/db.php', 'ddvue.providers.db');
+        $this->mergeConfigFrom(__DIR__ . '/config/ddvue/providers/ldap.php', 'ddvue.providers.ldap');
+
+
+        \Config::set('auth.guards.ddvue_db', config('ddvue.guards.ddvue_db'));
+        \Config::set('auth.guards.ddvue_ldap', config('ddvue.guards.ddvue_ldap'));
+        \Config::set('auth.providers.db', config('ddvue.providers.db'));
+        \Config::set('auth.providers.ldap', config('ddvue.providers.ldap'));
 
 
         $this->app->bind(
