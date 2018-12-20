@@ -39,10 +39,11 @@
             </el-form-item>
 
             <el-form-item label="单位" prop="dep_id">
-                <el-select v-model="model.dep_id" placeholder="">
-                    <ddv-crud-select-recursive-option :rootSelectable="false"
-                                                      :items="depItems"></ddv-crud-select-recursive-option>
-                </el-select>
+                <ddv-department-select :queryUrl="depQueryUrl" @onChange="onSelectDep" :value="{'group':'','key':'id','id':model.dep_id,'value':model.department.title}"></ddv-department-select>
+                <!--<el-select v-model="model.dep_id" placeholder="">-->
+                <!--<ddv-crud-select-recursive-option :rootSelectable="false"-->
+                <!--:items="depItems"></ddv-crud-select-recursive-option>-->
+                <!--</el-select>-->
             </el-form-item>
             <el-form-item label="角色" prop="roles">
                 <el-select v-model="model.roles" placeholder="" multiple>
@@ -123,6 +124,7 @@
         props: {
             depItems: Array,
             roleItems: Array,
+            depQueryUrl: String
         },
         computed: {
             loginType: function () {
@@ -142,7 +144,6 @@
                     return this.model;
                 },
                 set: function (v) {
-                    console.log(v.roles)
                     let roles = [];
                     v.roles.forEach(function (r) {
                         roles.push(r.id);
@@ -164,6 +165,10 @@
                     pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
                 }
                 return pwd;
+            },
+            onSelectDep: function (item) {
+                console.log(item)
+                this.model.dep_id = item.id;
             }
         }
     }
