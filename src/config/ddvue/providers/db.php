@@ -7,5 +7,5 @@
  */
 return [
     'driver' => 'eloquent',
-    'model'  => app('config')['ddvue.adminpanel.auth.user_model'],
+    'model'  => \DDVue\AdminPanel\app\Models\DdvDbUser::class,
 ];

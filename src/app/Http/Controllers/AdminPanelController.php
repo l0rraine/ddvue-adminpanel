@@ -12,18 +12,36 @@ use Illuminate\Support\Facades\Password;
 class AdminPanelController extends Controller
 {
     /**
-     * @var DdvueMenu
+     * @var mixed
      */
     private $ddvueMenu;
 
     /**
      * AdminPanelController constructor.
      *
-     * @param DdvueMenu $ddvueMenu
      */
-    public function __construct(DdvueMenu $ddvueMenu)
+    public function __construct()
     {
-        $this->ddvueMenu = $ddvueMenu;
+
+        $this->setMenuModel();
+    }
+
+    private function setMenuModel()
+    {
+        $model = config('ddvue.adminpanel.menu_model');
+        if ($model instanceof Model) {
+            $this->ddvueMenu     = $model;
+        } else {
+            if (!class_exists($model)) {
+                $model = "\\App\\Models\\" . $model;
+                if (!class_exists($model)) {
+                    throw new \Exception('This model does not exist.', 404);
+                }
+            }
+            $this->ddvueMenu     = new $model();
+        }
+
+
     }
 
     public function getIndex()

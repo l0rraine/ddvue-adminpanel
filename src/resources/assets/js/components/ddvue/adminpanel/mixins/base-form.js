@@ -55,6 +55,15 @@ export const BaseForm = {
                             that.doPostCallback(that);
                         })
                         .catch(function (e) {
+                            if(e.response.status==419){
+                                that.$message({
+                                    type: 'info',
+                                    duration: 4000,
+                                    message: '身份验证超时'
+                                });
+                                window.location.reload(true);
+
+                            }
                             if (e.response.data.errors) {
                                 const errors = e.response.data.errors;
                                 const form = that.$refs[formName];
