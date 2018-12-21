@@ -39,7 +39,8 @@
             </el-form-item>
 
             <el-form-item label="单位" prop="dep_id">
-                <ddv-department-select :queryUrl="depQueryUrl" @onChange="onSelectDep" :value="{'group':'','key':'id','id':model.dep_id,'value':model.department.title}"></ddv-department-select>
+                <ddv-department-select :queryUrl="depQueryUrl" @onChange="onSelectDep"
+                                       :value="depModel"></ddv-department-select>
                 <!--<el-select v-model="model.dep_id" placeholder="">-->
                 <!--<ddv-crud-select-recursive-option :rootSelectable="false"-->
                 <!--:items="depItems"></ddv-crud-select-recursive-option>-->
@@ -66,18 +67,11 @@
         data() {
             return {
                 model: {
-                    id: '',
-                    name: '',
-                    displayname: '',
-                    email: '',
-                    password: '',
-                    password_confirmation: '',
-                    dep_id: '',
-                    roles: ''
+                    id: ''
                 },
                 rules: {
                     dep_id: [
-                        {required: true, message: '必须选择单位', trigger: 'change'}
+                        {required: true, message: '必须选择单位'}
                     ]
                 }
             }
@@ -152,6 +146,20 @@
                     this.model = v;
 
                 }
+            },
+            depModel: {
+                get: function () {
+                    if (this.model.dep_id) {
+                        const title = this.depItems.find(o => o.id === this.model.dep_id).title;
+                        return {'group': '', 'key': 'id', 'id': this.model.dep_id, 'value': title};
+                    } else {
+                        return null;
+                    }
+
+                },
+                set: function (v) {
+                    this.model.dep_id = v.id;
+                }
             }
         },
         methods: {
@@ -167,7 +175,6 @@
                 return pwd;
             },
             onSelectDep: function (item) {
-                console.log(item)
                 this.model.dep_id = item.id;
             }
         }

@@ -34,7 +34,7 @@ export const BaseForm = {
     },
     created() {
         if (this.formData !== undefined) {
-            this.form = this.formData;
+            this.form = Object.assign({}, this.formData);
         }
     },
     methods: {
@@ -55,7 +55,7 @@ export const BaseForm = {
                             that.doPostCallback(that);
                         })
                         .catch(function (e) {
-                            if(e.response.status==419){
+                            if (e.response.status == 419) {
                                 that.$message({
                                     type: 'info',
                                     duration: 4000,
@@ -83,7 +83,7 @@ export const BaseForm = {
                                     message: e.response.data.message
                                 });
                             }
-                            if(e.response.exception){
+                            if (e.response.exception) {
                                 console.log(e)
                             }
 
