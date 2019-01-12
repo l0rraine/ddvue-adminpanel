@@ -11,7 +11,7 @@
     "require": {
         "adldap2/adldap2": "^8.0",
         "adldap2/adldap2-laravel": "^4.0",
-        "spatie/laravel-permission": "^2.9",
+        "spatie/laravel-permission": "^2.29",
         "ddvue/crud": "~1.0"
     },
     "autoload": {
