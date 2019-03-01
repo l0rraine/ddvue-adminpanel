@@ -52,9 +52,10 @@
                 });
             },
             handleSidebarMenuClick(key, keyPath) {
-                this.sendTo('main', keyPath[1], function () {
-                    window.config.main_url = keyPath[1];
-                });
+              const path = keyPath.pop()
+              this.sendTo('main', path, function () {
+                window.config.main_url = path;
+              });
             },
         }
 
