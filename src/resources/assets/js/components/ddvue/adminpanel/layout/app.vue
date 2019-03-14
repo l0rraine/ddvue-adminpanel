@@ -52,7 +52,8 @@
                 });
             },
             handleSidebarMenuClick(key, keyPath) {
-              const path = keyPath.pop()
+              let p = Object.assign([],keyPath)
+              const path = p.pop()
               this.sendTo('main', path, function () {
                 window.config.main_url = path;
               });
