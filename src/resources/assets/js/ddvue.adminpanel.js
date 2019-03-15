@@ -188,6 +188,10 @@ import DdvDepartmentEdit from './components/ddvue/adminpanel/department/edit.vue
 
 Vue.component(DdvDepartmentEdit.name, DdvDepartmentEdit);
 
+import DdvDepartmentSelect from './components/ddvue/crud/partials/department-select'
+
+Vue.component(DdvDepartmentSelect.name, DdvDepartmentSelect);
+
 /**************************  角色管理  **************************/
 import DdvRoleList from './components/ddvue/adminpanel/role/list.vue';
 
