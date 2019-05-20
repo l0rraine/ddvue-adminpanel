@@ -111,6 +111,9 @@ class AdminPanelServiceProvider extends ServiceProvider
 
         $middleware = ['web', config('ddvue.adminpanel.auth.admin_auth_middleware')];
 
+        Route::post('api/department/query', config('ddvue.adminpanel.page_settings.department.controller').'@query');
+
+
         Route::group([
                          'middleware' => $middleware,
                          'prefix'     => config('ddvue.adminpanel.url_prefix')],
