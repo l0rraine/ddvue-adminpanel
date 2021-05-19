@@ -29,7 +29,7 @@ class DdvDepartment extends BaseClassifiedModel
         ],$merge);
     }
 
-    public static function messages($id = 0, $merge = [])
+    public function messages($id = 0, $merge = [])
     {
         return array_merge([
             'title.required' => '必须填写标题',

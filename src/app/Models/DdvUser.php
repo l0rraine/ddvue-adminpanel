@@ -44,7 +44,7 @@ class DdvUser extends Authenticatable
         ], $merge);
     }
 
-    public static function messages($id = 0, $merge = [])
+    public function messages($id = 0, $merge = [])
     {
         return array_merge([
             'password_confirmation.same' => ' 两次输入密码不一致!'
